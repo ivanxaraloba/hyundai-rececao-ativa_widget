@@ -1,1 +1,5 @@
-export const splitOptions = (text: string = "") => text.split(';').filter(Boolean)
+export const splitOptions = (text: string): string[] => {
+  if (!text) return [];
+  return text.split('; ').filter(Boolean);
+};
+

@@ -40,6 +40,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { splitOptions } from '@/utils/generic';
 
 export default function RenderField({
   configField,
@@ -48,8 +49,7 @@ export default function RenderField({
   configField: FieldRow;
   form: UseFormReturn<any>;
 }) {
-  const fieldOptions =
-    (configField?.options || '')?.split(';')?.filter(Boolean) || [];
+  const fieldOptions = splitOptions(configField?.options);
 
   return (
     configField.variant && (

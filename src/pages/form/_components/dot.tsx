@@ -59,7 +59,7 @@ const Dot: React.FC<DotComponentProps> = ({ dot, onSelect, disabled }) => {
 
             {dot.options && dot.options?.length > 0 && (
               <PopoverContent side="right" className="flex flex-col gap-2">
-                <div className="grid gap-4">
+                <div className="grid">
                   <h4 className="font-medium leading-none">Danos</h4>
                   <p className="text-sm text-muted-foreground">
                     Selecione o tipo de dano
@@ -92,7 +92,6 @@ const Dot: React.FC<DotComponentProps> = ({ dot, onSelect, disabled }) => {
                         id={`estimate_${option.value}`}
                         disabled={!option.active}
                         checked={option.estimate ?? false}
-                        className="data-[state=checked]:bg-green-400"
                         onCheckedChange={(e: boolean) =>
                           updateDotOption({
                             ...option,

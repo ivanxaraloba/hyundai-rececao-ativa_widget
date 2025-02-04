@@ -2,6 +2,8 @@ import { DotProps } from '@/types/types.config';
 import type { Config, Damage } from '@/types/types.config.js';
 import { create } from 'zustand';
 
+import { splitOptions } from '@/utils/generic';
+
 interface GlobalStore {
   zohoInitialized: boolean;
   config: Config | null;
@@ -53,7 +55,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
         damage_maps: config?.damage_maps?.map((damage: Damage) => {
           const options =
             typeof damage.options === 'string'
-              ? damage.options.split(';').filter(Boolean)
+              ? splitOptions(damage.options)
               : [];
 
           return {
