@@ -1,5 +1,5 @@
 import Dot from '@/pages/form/_components/dot';
-import { DotProps, VehicleState } from '@/types/types.config';
+import { Damage, DotProps } from '@/types/types.config';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -22,9 +22,9 @@ export default function SectionEstado({
   const { config } = useGlobalStore();
   const configVehicleState = config?.estado_viatura;
 
-  const updateDots = (newDot: DotProps, vehicleState: VehicleState) => {
+  const updateDots = (newDot: DotProps, damage: Damage) => {
     const currentDots = form.getValues('grouped_dots');
-    const updatedDamage = currentDots[vehicleState.tab_id]?.dots || [];
+    const updatedDamage = currentDots[damage.id]?.dots || [];
 
     const updatedDotsForDamage = updatedDamage.map((dot: DotProps) => {
       return dot.id === newDot.id ? newDot : dot;
@@ -32,8 +32,8 @@ export default function SectionEstado({
 
     form.setValue('grouped_dots', {
       ...currentDots,
-      [vehicleState.tab_id]: {
-        ...currentDots[vehicleState.tab_id],
+      [damage.id]: {
+        ...currentDots[damage.id],
         dots: updatedDotsForDamage,
       },
     });
@@ -47,40 +47,32 @@ export default function SectionEstado({
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Tabs defaultValue={configVehicleState?.[0]?.tab_id}>
+              <Tabs defaultValue={configVehicleState?.[0]?.id}>
                 <TabsList>
-                  {configVehicleState?.map((vehicleState) => (
-                    <TabsTrigger
-                      key={vehicleState.tab_id}
-                      value={vehicleState.tab_id}
-                    >
-                      {vehicleState.name}
+                  {configVehicleState?.map((damage) => (
+                    <TabsTrigger key={damage.id} value={damage.id}>
+                      {damage.label}
                     </TabsTrigger>
                   ))}
                 </TabsList>
 
                 <div className="border rounded-lg flex justify-center mt-2">
-                  {configVehicleState?.map((vehicleState) => (
-                    <TabsContent
-                      key={vehicleState.tab_id}
-                      value={vehicleState.tab_id}
-                    >
+                  {configVehicleState?.map((damage) => (
+                    <TabsContent key={damage.id} value={damage.id}>
                       <div className="relative flex items-center justify-center min-w-[380px] w-[380px]">
                         {/* image */}
                         <img
                           className="min-w-[380px] w-[380px] select-none pointer-events-none"
-                          src={vehicleState.map.image}
-                          alt={vehicleState.map.id_map}
+                          src={damage.image}
+                          alt={damage.id}
                         />
                         {/* dots */}
-                        {field.value?.[vehicleState.tab_id].dots?.map(
+                        {(field.value?.[damage.id]?.dots || []).map(
                           (dot: DotProps) => (
                             <Dot
                               key={dot.id}
                               dot={dot}
-                              onSelect={(newDot) =>
-                                updateDots(newDot, vehicleState)
-                              }
+                              onSelect={(newDot) => updateDots(newDot, damage)}
                             />
                           ),
                         )}

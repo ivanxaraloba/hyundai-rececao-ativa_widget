@@ -6,7 +6,7 @@ import * as z from 'zod';
 import FormSection from '@/components/shared/form-section';
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
-import RenderField from '../../../components/shared/render-field';
+import RenderField from './render-field';
 
 export default function SectionPersonalizacao({
   form,
@@ -22,7 +22,7 @@ export default function SectionPersonalizacao({
         {configFields.map((configField, index: number) => {
           return (
             <RenderField
-              key={configField.id_widget}
+              key={configField.id}
               configField={configField}
               form={form}
             />

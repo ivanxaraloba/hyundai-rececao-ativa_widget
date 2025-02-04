@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form';
 import FormSection from '@/components/shared/form-section';
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
-import RenderField from '../../../components/shared/render-field';
+import RenderField from './render-field';
 
 export default function SectionInformacoes({
   form,
@@ -18,7 +18,7 @@ export default function SectionInformacoes({
   return (
     <FormSection label="Informações Viatura">
       {configFields.map((configField, index: number) => {
-        if (configField.id_widget === 'nivel_combustivel') {
+        if (configField.id === 'nivel_combustivel') {
           const nivel_images: Record<string, string> = {
             '0': 'https://previewengine-accl.zoho.com/image/WD/7q02g83041e5116104af6a5af6c6490e1e55c',
             '1/4':
@@ -50,7 +50,7 @@ export default function SectionInformacoes({
 
         return (
           <RenderField
-            key={configField.id_widget}
+            key={configField.id}
             configField={configField}
             form={form}
           />

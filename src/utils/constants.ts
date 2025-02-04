@@ -16,6 +16,6 @@ export const FORM_BUILDER = {
 
 export const CREATOR_FORM_CONFIG = {
   appName: 'rececao-ativa',
-  reportName: 'database_widget_Report',
+  reportName: 'Widget_Config_Report',
 };
 

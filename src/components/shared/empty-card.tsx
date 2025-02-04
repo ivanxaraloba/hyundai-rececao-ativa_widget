@@ -5,7 +5,7 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 
 interface EmptyCardProps extends React.ComponentPropsWithoutRef<typeof Card> {
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   action?: React.ReactNode;
   icon?: React.ComponentType<{ className?: string }>;
 }

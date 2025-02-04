@@ -21,7 +21,7 @@ export type DotProps = z.infer<typeof dotSchema>;
 
 export interface FieldRow {
   order: number;
-  id_widget: string;
+  id: string;
   label: string;
   placeholder: string;
   required: boolean;
@@ -40,25 +40,22 @@ export interface FieldSection {
   fields: FieldRow[];
 }
 
-export interface VehicleStateMap {
-  id_map: string;
-  image: string;
-  dots: string;
-}
-
-export interface VehicleState {
-  tab_id: string;
-  name: string;
+export interface Damage {
+  id: string;
+  label: string;
   options:
     | string // before formating ( creator )
     | { value: string; label: string; active: boolean; estimate: boolean }; // after formatting ( store/global )
-  map: VehicleStateMap;
+  image: string;
+  dots:
+    | string // before formatting ( creator )
+    | DotProps; // after formatting ( store/global )
 }
 
 export interface Config {
   logo: string;
   fields_sections: Record<'informacoes_viatura' | 'personalizacao', FieldRow[]>;
-  estado_viatura: VehicleState[];
+  estado_viatura: Damage[];
   images_upload: {
     max_number_of_files: number;
     max_megabytes_per_file: number;

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { safelyUpdateDotOptions } from '@/helpers/helpers-dot';
+import { DotProps, OptionProps } from '@/types/types.config';
 import { X } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
@@ -19,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DotProps, OptionProps } from '@/types/types.config';
 import { FormData } from '../page';
 
 export default function SectionOrcamento({
@@ -30,7 +30,7 @@ export default function SectionOrcamento({
   const dots = form.watch('grouped_dots') || {};
 
   const updateDotOption = (
-    vehicleState: string,
+    damage: string,
     updateDot: DotProps,
     modifiedOption: OptionProps,
   ) => {
@@ -38,9 +38,9 @@ export default function SectionOrcamento({
 
     const updatedDots = {
       ...dots,
-      [vehicleState]: {
-        ...dots[vehicleState],
-        dots: dots[vehicleState].dots.map((d: DotProps) =>
+      [damage]: {
+        ...dots[damage],
+        dots: dots[damage].dots.map((d: DotProps) =>
           d.id === updateDot.id ? updatedDot : d,
         ),
       },

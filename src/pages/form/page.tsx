@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 import {
   Config,
+  Damage,
   DotProps,
   dotSchema,
   FieldRow,
-  VehicleState,
 } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -60,7 +60,7 @@ const createFormSchema = (config: Config) => {
         }, `Este campo é obrigatório`);
       }
 
-      schemaFields[configField.id_widget] = fieldSchema;
+      schemaFields[configField.id] = fieldSchema;
     });
 
   return z.object(schemaFields) as z.ZodObject<
@@ -89,11 +89,11 @@ export default function PageForm() {
       fim_de_garantia: new Date(),
       grouped_dots: Array.isArray(config?.estado_viatura)
         ? config.estado_viatura.reduce<Record<string, any>>(
-            (acc, vehicleState: VehicleState) => {
-              if (vehicleState?.map?.dots) {
-                acc[vehicleState.tab_id] = {
-                  label: vehicleState.name,
-                  dots: vehicleState.map.dots,
+            (acc, damage: Damage) => {
+              if (damage?.dots) {
+                acc[damage.id] = {
+                  label: damage.label,
+                  dots: damage.dots,
                 };
               }
               return acc;

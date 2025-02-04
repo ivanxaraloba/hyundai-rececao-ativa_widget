@@ -1,5 +1,5 @@
 import { DotProps } from '@/types/types.config';
-import type { Config, VehicleState } from '@/types/types.config.js';
+import type { Config, Damage } from '@/types/types.config.js';
 import { create } from 'zustand';
 
 interface GlobalStore {
@@ -50,45 +50,40 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 
       const configFormatted = {
         ...config,
-        estado_viatura: config?.estado_viatura?.map(
-          (vehicleState: VehicleState) => {
-            const options =
-              typeof vehicleState.options === 'string'
-                ? vehicleState.options.split(';').filter(Boolean)
-                : [];
+        estado_viatura: config?.estado_viatura?.map((damage: Damage) => {
+          const options =
+            typeof damage.options === 'string'
+              ? damage.options.split(';').filter(Boolean)
+              : [];
 
-            return {
-              ...vehicleState,
-              options,
-              map: {
-                ...vehicleState.map,
-                dots: JSON.parse(vehicleState.map.dots).map(
-                  (dot: DotProps) => ({
-                    ...dot,
-                    options: options.map((option: string) => ({
-                      label: option,
-                      value: option,
-                      active: false,
-                      estimate: false,
-                    })),
-                  }),
-                ),
-              },
-            };
-          },
-        ),
+          return {
+            ...damage,
+            options,
+            dots:
+              typeof damage.dots === 'string' &&
+              JSON.parse(damage.dots).map((dot: DotProps) => ({
+                ...dot,
+                options: options.map((option: string) => ({
+                  label: option,
+                  value: option,
+                  active: false,
+                  estimate: false,
+                })),
+              })),
+          };
+        }),
       };
 
       console.log({ configFormatted });
 
       set({ config: configFormatted });
       return config;
-    } catch (error) {
-      console.log(error);
-
+    } catch (error: any) {
       throw error instanceof Error
         ? error
-        : new Error('Unknown error occurred');
+        : error?.responseText
+          ? error.responseText
+          : new Error('Unknown error occurred');
     }
   },
 }));

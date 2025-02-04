@@ -25,8 +25,20 @@ export default function App() {
         <Loading msg="A carregar formulário" />
       ) : queryConfig.isError ? (
         <EmptyCard
-          title="Falha ao obter a configuração do formulário"
-          description={String(queryConfig.error)}
+          title="Confirme as configurações no formulário 'Widget Config'"
+          description={
+            <div className="flex flex-col gap-1 mt-2">
+              <span>
+                Criar/Clonar o formulário 'Widget Config' (workflows + campos)
+              </span>
+              <span>Nome de API da aplicação do creator: 'rececao-ativa'</span>
+              <span>Nome de API do report: 'Widget_Config_Report'</span>
+              <span>
+                ( Optional ) Para adicionar um campo mapeado por URL Params,
+                adicione o ID do campo na "Page Variables" da página do widget
+              </span>
+            </div>
+          }
           icon={AlertTriangleIcon}
         />
       ) : (
