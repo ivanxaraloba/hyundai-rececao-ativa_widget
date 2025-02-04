@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 
-import { Config, FieldRow } from '@/types';
+import {
+  Config,
+  DotProps,
+  dotSchema,
+  FieldRow,
+  VehicleState,
+} from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -8,21 +14,25 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useGlobalStore } from '@/stores/global';
-import { DAMAGE_MAPS } from '@/utils/constants';
-import { damageMapsType, DotProps, dotSchema } from '@/utils/types';
-import Estado from './_components/estado';
-import Fotografias from './_components/fotografias';
-import InformacoesObj from './_components/informacoes copy';
-import Orcamento from './_components/orcamento';
-import PersonalizacaoObj from './_components/personalizacao copy';
+import SectionEstado from './_components/section-estado';
+import SectionInformacoes from './_components/section-informacoes';
+import SectionOrcamento from './_components/section-orcamento';
+import SectionPersonalizacao from './_components/section-personalizacao';
+import SectionUploadImages from './_components/section-upload-images';
 
 const createFormSchema = (config: Config) => {
   const schemaFields: Record<string, z.ZodType<any, any, any>> = {
-    dots: z.record(z.array(dotSchema)),
+    grouped_dots: z.record(
+      z.object({
+        label: z.string(),
+        dots: z.array(dotSchema),
+      }),
+    ),
   };
 
-  [...config.informacoes_viatura2, ...config.personalizacao2].forEach(
-    (configField: FieldRow) => {
+  Object.values(config.fields_sections)
+    .flat()
+    .forEach((configField: FieldRow) => {
       let fieldSchema: any;
 
       if (configField.type === 'number') {
@@ -51,8 +61,7 @@ const createFormSchema = (config: Config) => {
       }
 
       schemaFields[configField.id_widget] = fieldSchema;
-    },
-  );
+    });
 
   return z.object(schemaFields) as z.ZodObject<
     Record<string, z.ZodType<any, any, any>>,
@@ -78,13 +87,20 @@ export default function PageForm() {
       numero_or: 999,
       data_proxima_itv: new Date(),
       fim_de_garantia: new Date(),
-      dots: DAMAGE_MAPS.reduce(
-        (acc: Record<string, DotProps[]>, damageMap: damageMapsType) => {
-          acc[damageMap.id] = damageMap.config.dots.map((dot) => dot);
-          return acc;
-        },
-        {},
-      ),
+      grouped_dots: Array.isArray(config?.estado_viatura)
+        ? config.estado_viatura.reduce<Record<string, any>>(
+            (acc, vehicleState: VehicleState) => {
+              if (vehicleState?.map?.dots) {
+                acc[vehicleState.tab_id] = {
+                  label: vehicleState.name,
+                  dots: vehicleState.map.dots,
+                };
+              }
+              return acc;
+            },
+            {},
+          )
+        : {},
     },
   });
 
@@ -96,7 +112,10 @@ export default function PageForm() {
     const fetch = async () => {
       const params = ZOHO.CREATOR.UTIL.getQueryParams();
       for (const key of Object.keys(params)) {
-        form.setValue(key, params[key]);
+        form.setValue(key, params[key], {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
       }
     };
     fetch();
@@ -105,18 +124,18 @@ export default function PageForm() {
   return (
     <div className="max-w-4xl mx-auto p-10">
       <img
-        src={config?.image}
+        src={config?.logo}
         alt="logo_hyundai"
         loading="lazy"
         className="pb-20 mx-auto max-w-xs"
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-          <InformacoesObj form={form} />
-          <Estado form={form} />
-          <Orcamento form={form} />
-          <PersonalizacaoObj form={form} />
-          <Fotografias form={form} />
+          <SectionInformacoes form={form} />
+          <SectionEstado form={form} />
+          <SectionOrcamento form={form} />
+          <SectionPersonalizacao form={form} />
+          <SectionUploadImages form={form} />
           <Button type="submit">Submit</Button>
         </form>
       </Form>

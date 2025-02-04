@@ -1,4 +1,5 @@
-import type { Config } from '@/types/index.js';
+import { DotProps } from '@/types/types.config';
+import type { Config, VehicleState } from '@/types/types.config.js';
 import { create } from 'zustand';
 
 interface GlobalStore {
@@ -46,9 +47,45 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
       });
 
       const config = JSON.parse(data.config);
-      set({ config });
+
+      const configFormatted = {
+        ...config,
+        estado_viatura: config?.estado_viatura?.map(
+          (vehicleState: VehicleState) => {
+            const options =
+              typeof vehicleState.options === 'string'
+                ? vehicleState.options.split(';').filter(Boolean)
+                : [];
+
+            return {
+              ...vehicleState,
+              options,
+              map: {
+                ...vehicleState.map,
+                dots: JSON.parse(vehicleState.map.dots).map(
+                  (dot: DotProps) => ({
+                    ...dot,
+                    options: options.map((option: string) => ({
+                      label: option,
+                      value: option,
+                      active: false,
+                      estimate: false,
+                    })),
+                  }),
+                ),
+              },
+            };
+          },
+        ),
+      };
+
+      console.log({ configFormatted });
+
+      set({ config: configFormatted });
       return config;
     } catch (error) {
+      console.log(error);
+
       throw error instanceof Error
         ? error
         : new Error('Unknown error occurred');

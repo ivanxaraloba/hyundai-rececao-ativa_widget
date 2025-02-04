@@ -17,9 +17,11 @@ import {
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
 
-const Fotografias: React.FC<{
+export default function SectionUploadImages({
+  form,
+}: {
   form: UseFormReturn<FormData>;
-}> = ({ form }) => {
+}) {
   const { config } = useGlobalStore();
 
   return (
@@ -35,9 +37,11 @@ const Fotografias: React.FC<{
                 <FileUploader
                   value={field.value}
                   onValueChange={field.onChange}
-                  maxFileCount={config?.fotografias?.max_number_of_files || 10}
+                  maxFileCount={
+                    config?.images_upload?.max_number_of_files || 10
+                  }
                   maxSize={
-                    (config?.fotografias?.max_megabytes_per_file || 4) *
+                    (config?.images_upload?.max_megabytes_per_file || 4) *
                     1024 *
                     1024
                   }
@@ -50,7 +54,5 @@ const Fotografias: React.FC<{
       />
     </FormSection>
   );
-};
-
-export default Fotografias;
+}
 

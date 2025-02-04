@@ -19,14 +19,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DotProps, OptionProps } from '@/utils/types';
+import { DotProps, OptionProps } from '@/types/types.config';
 import { FormData } from '../page';
 
-export default function Orcamento({ form }: { form: UseFormReturn<FormData> }) {
-  const dots = form.watch('dots') || {};
+export default function SectionOrcamento({
+  form,
+}: {
+  form: UseFormReturn<FormData>;
+}) {
+  const dots = form.watch('grouped_dots') || {};
 
   const updateDotOption = (
-    state: string,
+    vehicleState: string,
     updateDot: DotProps,
     modifiedOption: OptionProps,
   ) => {
@@ -34,12 +38,15 @@ export default function Orcamento({ form }: { form: UseFormReturn<FormData> }) {
 
     const updatedDots = {
       ...dots,
-      [state]: dots[state].map((d: DotProps) =>
-        d.id === updateDot.id ? updatedDot : d,
-      ),
+      [vehicleState]: {
+        ...dots[vehicleState],
+        dots: dots[vehicleState].dots.map((d: DotProps) =>
+          d.id === updateDot.id ? updatedDot : d,
+        ),
+      },
     };
 
-    form.setValue('dots', updatedDots);
+    form.setValue('grouped_dots', updatedDots);
   };
 
   return (
@@ -56,7 +63,7 @@ export default function Orcamento({ form }: { form: UseFormReturn<FormData> }) {
         </TableHeader>
         <TableBody>
           {Object.keys(dots).map((state) =>
-            dots[state].map((dot: DotProps, dotIndex: number) =>
+            dots[state].dots.map((dot: DotProps, dotIndex: number) =>
               dot.options
                 ?.filter((option) => option.active === true)
                 .map((option, optionIndex) => (
@@ -79,7 +86,7 @@ export default function Orcamento({ form }: { form: UseFormReturn<FormData> }) {
                       </Button>
                     </TableCell>
                     <TableCell>
-                      <Input type="text" value={state} disabled />
+                      <Input type="text" value={dots[state].label} disabled />
                     </TableCell>
                     <TableCell>
                       <Input type="text" value={dot.name} disabled />

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { safelyUpdateDotOptions } from '@/helpers/helpers-dot';
 import { cn } from '@/lib/utils';
+import { DotProps, OptionProps } from '@/types/types.config';
 import { ScrollText } from 'lucide-react';
 
 import { Checkbox } from '@/components/ui/checkbox';
@@ -17,7 +18,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { DotProps, OptionProps } from '@/utils/types';
 
 interface DotComponentProps {
   dot: DotProps;

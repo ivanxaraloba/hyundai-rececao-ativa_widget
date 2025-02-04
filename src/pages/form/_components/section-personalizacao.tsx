@@ -6,15 +6,15 @@ import * as z from 'zod';
 import FormSection from '@/components/shared/form-section';
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
-import RenderField from './render-field';
+import RenderField from '../../../components/shared/render-field';
 
-export default function PersonalizacaoObj({
+export default function SectionPersonalizacao({
   form,
 }: {
   form: UseFormReturn<FormData>;
 }) {
   const { config } = useGlobalStore();
-  const configFields = config?.personalizacao2 || [];
+  const configFields = config?.fields_sections.personalizacao || [];
 
   return (
     <FormSection label="Personalização">

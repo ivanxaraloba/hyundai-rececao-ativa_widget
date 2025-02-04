@@ -1,4 +1,4 @@
-import { DotProps, OptionProps } from '@/utils/types';
+import { DotProps, OptionProps } from '@/types/types.config';
 
 export const safelyUpdateDotOptions = (
   dot: DotProps,

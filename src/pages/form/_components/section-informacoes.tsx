@@ -5,21 +5,19 @@ import { UseFormReturn } from 'react-hook-form';
 import FormSection from '@/components/shared/form-section';
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
-import RenderField from './render-field';
+import RenderField from '../../../components/shared/render-field';
 
-export default function InformacoesObj({
+export default function SectionInformacoes({
   form,
 }: {
   form: UseFormReturn<FormData>;
 }) {
   const { config } = useGlobalStore();
-  const configFields = config?.informacoes_viatura2 || [];
+  const configFields = config?.fields_sections.informacoes_viatura || [];
 
   return (
     <FormSection label="Informações Viatura">
       {configFields.map((configField, index: number) => {
-
-        
         if (configField.id_widget === 'nivel_combustivel') {
           const nivel_images: Record<string, string> = {
             '0': 'https://previewengine-accl.zoho.com/image/WD/7q02g83041e5116104af6a5af6c6490e1e55c',
