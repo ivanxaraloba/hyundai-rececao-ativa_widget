@@ -8,13 +8,13 @@ import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
 import RenderField from './render-field';
 
-export default function SectionPersonalizacao({
+export default function SectionCustomization({
   form,
 }: {
   form: UseFormReturn<FormData>;
 }) {
   const { config } = useGlobalStore();
-  const configFields = config?.fields_sections.personalizacao || [];
+  const configFields = config?.fields_sections.customization || [];
 
   return (
     <FormSection label="Personalização">

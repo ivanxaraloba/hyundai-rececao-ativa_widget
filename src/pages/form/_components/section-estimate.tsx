@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table';
 import { FormData } from '../page';
 
-export default function SectionOrcamento({
+export default function SectionEstimate({
   form,
 }: {
   form: UseFormReturn<FormData>;

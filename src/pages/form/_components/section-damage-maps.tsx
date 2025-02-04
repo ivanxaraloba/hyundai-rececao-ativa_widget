@@ -14,13 +14,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
 
-export default function SectionEstado({
+export default function SectionDamageMaps({
   form,
 }: {
   form: UseFormReturn<FormData>;
 }) {
   const { config } = useGlobalStore();
-  const configVehicleState = config?.estado_viatura;
+  const configVehicleState = config?.damage_maps;
 
   const updateDots = (newDot: DotProps, damage: Damage) => {
     const currentDots = form.getValues('grouped_dots');

@@ -38,10 +38,10 @@ export default function SectionUploadImages({
                   value={field.value}
                   onValueChange={field.onChange}
                   maxFileCount={
-                    config?.images_upload?.max_number_of_files || 10
+                    config?.images_upload?.max_files_count || 10
                   }
                   maxSize={
-                    (config?.images_upload?.max_megabytes_per_file || 4) *
+                    (config?.images_upload?.max_file_size_mb || 4) *
                     1024 *
                     1024
                   }

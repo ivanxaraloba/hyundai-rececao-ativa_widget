@@ -7,13 +7,13 @@ import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
 import RenderField from './render-field';
 
-export default function SectionInformacoes({
+export default function SectionVehicleInfo({
   form,
 }: {
   form: UseFormReturn<FormData>;
 }) {
   const { config } = useGlobalStore();
-  const configFields = config?.fields_sections.informacoes_viatura || [];
+  const configFields = config?.fields_sections.vehicle_info || [];
 
   return (
     <FormSection label="Informações Viatura">

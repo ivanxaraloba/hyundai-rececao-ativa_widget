@@ -50,7 +50,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 
       const configFormatted = {
         ...config,
-        estado_viatura: config?.estado_viatura?.map((damage: Damage) => {
+        damage_maps: config?.damage_maps?.map((damage: Damage) => {
           const options =
             typeof damage.options === 'string'
               ? damage.options.split(';').filter(Boolean)

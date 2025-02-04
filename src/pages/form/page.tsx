@@ -14,11 +14,11 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useGlobalStore } from '@/stores/global';
-import SectionEstado from './_components/section-estado';
-import SectionInformacoes from './_components/section-informacoes';
-import SectionOrcamento from './_components/section-orcamento';
-import SectionPersonalizacao from './_components/section-personalizacao';
+import SectionCustomization from './_components/section-customization';
+import SectionDamageMaps from './_components/section-damage-maps';
+import SectionEstimate from './_components/section-estimate';
 import SectionUploadImages from './_components/section-upload-images';
+import SectionVehicleInfo from './_components/section-vehicle-info';
 
 const createFormSchema = (config: Config) => {
   const schemaFields: Record<string, z.ZodType<any, any, any>> = {
@@ -87,8 +87,8 @@ export default function PageForm() {
       numero_or: 999,
       data_proxima_itv: new Date(),
       fim_de_garantia: new Date(),
-      grouped_dots: Array.isArray(config?.estado_viatura)
-        ? config.estado_viatura.reduce<Record<string, any>>(
+      grouped_dots: Array.isArray(config?.damage_maps)
+        ? config.damage_maps.reduce<Record<string, any>>(
             (acc, damage: Damage) => {
               if (damage?.dots) {
                 acc[damage.id] = {
@@ -131,10 +131,10 @@ export default function PageForm() {
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-          <SectionInformacoes form={form} />
-          <SectionEstado form={form} />
-          <SectionOrcamento form={form} />
-          <SectionPersonalizacao form={form} />
+          <SectionVehicleInfo form={form} />
+          <SectionDamageMaps form={form} />
+          <SectionEstimate form={form} />
+          <SectionCustomization form={form} />
           <SectionUploadImages form={form} />
           <Button type="submit">Submit</Button>
         </form>

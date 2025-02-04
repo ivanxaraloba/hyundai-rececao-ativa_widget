@@ -54,11 +54,11 @@ export interface Damage {
 
 export interface Config {
   logo: string;
-  fields_sections: Record<'informacoes_viatura' | 'personalizacao', FieldRow[]>;
-  estado_viatura: Damage[];
+  fields_sections: Record<'vehicle_info' | 'customization', FieldRow[]>;
+  damage_maps: Damage[];
   images_upload: {
-    max_number_of_files: number;
-    max_megabytes_per_file: number;
+    max_files_count: number;
+    max_file_size_mb: number;
   };
 }
 
