@@ -1,18 +1,20 @@
+import { useEffect } from 'react';
+
 import { Config, FieldRow } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useGlobalStore } from '@/stores/global';
 import { DAMAGE_MAPS } from '@/utils/constants';
 import { damageMapsType, DotProps, dotSchema } from '@/utils/types';
-import Estado from './estado';
-import Fotografias from './fotografias';
-import InformacoesObj from './informacoes copy';
-import Orcamento from './orcamento';
-import PersonalizacaoObj from './personalizacao copy';
+import Estado from './_components/estado';
+import Fotografias from './_components/fotografias';
+import InformacoesObj from './_components/informacoes copy';
+import Orcamento from './_components/orcamento';
+import PersonalizacaoObj from './_components/personalizacao copy';
 
 const createFormSchema = (config: Config) => {
   const schemaFields: Record<string, z.ZodType<any, any, any>> = {
@@ -24,7 +26,7 @@ const createFormSchema = (config: Config) => {
       let fieldSchema: any;
 
       if (configField.type === 'number') {
-        fieldSchema = z.number();
+        fieldSchema = z.coerce.number();
       } else if (
         configField.variant === 'input' ||
         configField.variant === 'select' ||
@@ -66,7 +68,7 @@ export type FormData = z.infer<ReturnType<typeof createFormSchema>>;
 export default function PageForm() {
   const { config } = useGlobalStore();
 
-  if (!config) return <h1>config is null</h1>;
+  if (!config) return <span>config is null</span>;
 
   const form = useForm<FormData>({
     mode: 'onSubmit',
@@ -89,6 +91,16 @@ export default function PageForm() {
   const onSubmit = (data: FormData) => {
     console.log('submitted', data);
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      const params = ZOHO.CREATOR.UTIL.getQueryParams();
+      for (const key of Object.keys(params)) {
+        form.setValue(key, params[key]);
+      }
+    };
+    fetch();
+  }, [form, ZOHO]);
 
   return (
     <div className="max-w-4xl mx-auto p-10">

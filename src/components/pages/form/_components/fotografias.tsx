@@ -5,8 +5,8 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
-import { FileUploader } from '@/components/file-uploader';
-import FormSection from '@/components/form-section';
+import { FileUploader } from '@/components/shared/file-uploader';
+import FormSection from '@/components/shared/form-section';
 import {
   FormControl,
   FormField,
@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useGlobalStore } from '@/stores/global';
-import { FormData } from './_index';
+import { FormData } from '../page';
 
 const Fotografias: React.FC<{
   form: UseFormReturn<FormData>;

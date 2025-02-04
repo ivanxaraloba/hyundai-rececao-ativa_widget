@@ -6,7 +6,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
-import FormSection from '@/components/form-section';
+import FormSection from '@/components/shared/form-section';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -25,10 +25,10 @@ import {
 } from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useGlobalStore } from '@/stores/global';
-import { formSchema } from './_index';
+import { FormData } from '../page';
 
 const Informacoes: React.FC<{
-  form: UseFormReturn<z.infer<typeof formSchema>>;
+  form: UseFormReturn<FormData>;
 }> = ({ form }) => {
   const { config } = useGlobalStore();
   const configFields = config?.informacoes_viatura;

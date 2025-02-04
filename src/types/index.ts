@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { formSchema } from '@/components/page-form/_index';
+import { FormData } from '@/components/pages/form/page';
 
 export interface FieldRow {
   order: number;
@@ -20,7 +20,7 @@ export interface FieldRow {
 
 export interface Config {
   image: string;
-  informacoes_viatura: Record<keyof z.infer<typeof formSchema>, FieldRow>;
+  informacoes_viatura: Record<keyof FormData, FieldRow>;
   informacoes_viatura2: FieldRow[];
   personalizacao2: FieldRow[];
   personalizacao: FieldRow[];

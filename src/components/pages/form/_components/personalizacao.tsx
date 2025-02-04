@@ -5,7 +5,7 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
-import FormSection from '@/components/form-section';
+import FormSection from '@/components/shared/form-section';
 import {
   FormControl,
   FormField,
@@ -30,12 +30,12 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { OPTIONS_STATE_VEHICLE } from '@/utils/constants';
-import { formSchema } from './_index';
+import { FormData } from '../page';
 
 export default function Personalizacao({
   form,
 }: {
-  form: UseFormReturn<z.infer<typeof formSchema>>;
+  form: UseFormReturn<FormData>;
 }) {
   return (
     <FormSection label="Personalização">

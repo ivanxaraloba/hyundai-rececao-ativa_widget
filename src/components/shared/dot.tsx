@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ScrollText } from 'lucide-react';
 
 import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import {
   Popover,
   PopoverContent,
@@ -17,7 +18,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { DotProps, OptionProps } from '@/utils/types';
-import { Label } from './ui/label';
 
 interface DotComponentProps {
   dot: DotProps;

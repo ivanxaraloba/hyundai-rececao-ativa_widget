@@ -7,7 +7,7 @@ import { X } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
-import FormSection from '@/components/form-section';
+import FormSection from '@/components/shared/form-section';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -20,7 +20,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { DotProps, OptionProps } from '@/utils/types';
-import { FormData } from './_index';
+import { FormData } from '../page';
 
 export default function Orcamento({ form }: { form: UseFormReturn<FormData> }) {
   const dots = form.watch('dots') || {};

@@ -29,17 +29,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Button } from '../ui/button';
-import { Label } from '../ui/label';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Button } from '../../../ui/button';
+import { Label } from '../../../ui/label';
+import { RadioGroup, RadioGroupItem } from '../../../ui/radio-group';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
-import { Textarea } from '../ui/textarea';
+} from '../../../ui/select';
+import { Textarea } from '../../../ui/textarea';
 
 export default function RenderField({
   configField,

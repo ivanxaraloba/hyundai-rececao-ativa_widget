@@ -1,8 +1,8 @@
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
-import Dot from '@/components/dot';
-import FormSection from '@/components/form-section';
+import Dot from '@/components/shared/dot';
+import FormSection from '@/components/shared/form-section';
 import {
   FormControl,
   FormField,
@@ -12,7 +12,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DAMAGE_MAPS } from '@/utils/constants';
 import { DotProps } from '@/utils/types';
-import { FormData } from './_index';
+import { FormData } from '../page';
 
 const Estado: React.FC<{
   form: UseFormReturn<FormData>;
