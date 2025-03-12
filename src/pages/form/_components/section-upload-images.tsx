@@ -37,13 +37,9 @@ export default function SectionUploadImages({
                 <FileUploader
                   value={field.value}
                   onValueChange={field.onChange}
-                  maxFileCount={
-                    config?.images_upload?.max_files_count || 10
-                  }
+                  maxFileCount={config?.images_upload?.max_files_count || 10}
                   maxSize={
-                    (config?.images_upload?.max_file_size_mb || 4) *
-                    1024 *
-                    1024
+                    (config?.images_upload?.max_file_size_mb || 4) * 1024 * 1024
                   }
                 />
               </FormControl>
@@ -55,4 +51,3 @@ export default function SectionUploadImages({
     </FormSection>
   );
 }
-

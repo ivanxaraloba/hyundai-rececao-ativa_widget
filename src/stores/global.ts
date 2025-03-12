@@ -6,6 +6,7 @@ import { splitOptions } from '@/utils/generic';
 
 interface GlobalStore {
   zohoInitialized: boolean;
+  recordId: string | null;
   config: Config | null;
   getConfig: ({
     appName,
@@ -14,10 +15,12 @@ interface GlobalStore {
     appName: string;
     reportName: string;
   }) => Promise<Config | null>;
+  setConfig: (config: Config) => void;
 }
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
   zohoInitialized: false,
+  recordId: null,
   config: null,
   getConfig: async ({
     appName,
@@ -43,38 +46,43 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
         throw new Error('Nenhum registo encontrado ou erro na API');
       }
 
+      const configId = records[0].ID;
+
+      set({ recordId: configId });
+
       const { data } = await ZOHO.CREATOR.API.getRecordById({
         ...paramsForm,
-        id: records[0].ID,
+        id: configId,
       });
 
-      const config = JSON.parse(data.config);
+      const config = JSON.parse(data.config_1);
 
-      const configFormatted = {
-        ...config,
-        damage_maps: config?.damage_maps?.map((damage: Damage) => {
-          const options =
-            typeof damage.options === 'string'
-              ? splitOptions(damage.options)
-              : [];
-
-          return {
-            ...damage,
-            options,
-            dots:
-              typeof damage.dots === 'string' &&
-              JSON.parse(damage.dots).map((dot: DotProps) => ({
-                ...dot,
-                options: options.map((option: string) => ({
-                  label: option,
-                  value: option,
-                  active: false,
-                  estimate: false,
-                })),
-              })),
-          };
-        }),
-      };
+      const configFormatted = config;
+      // const configFormatted = {
+      //   ...config,
+      //   damage_maps: config?.damage_maps?.map((damage: Damage) => {
+      //     const options =
+      //       typeof damage.options === 'string'
+      //         ? splitOptions(damage.options)
+      //         : [];
+      //     return {
+      //       ...damage,
+      //       options,
+      //       dots:
+      //         typeof damage.dots === 'string' &&
+      //         JSON.parse(damage.dots).map((dot: DotProps) => ({
+      //           ...dot,
+      //           active: false,
+      //           options: options.map((option: string) => ({
+      //             label: option,
+      //             value: option,
+      //             active: false,
+      //             estimate: false,
+      //           })),
+      //         })),
+      //     };
+      //   }),
+      // };
 
       console.log({ configFormatted });
 
@@ -87,5 +95,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
           ? error.responseText
           : new Error('Unknown error occurred');
     }
+  },
+  setConfig: (config: Config) => {
+    set({ config });
   },
 }));

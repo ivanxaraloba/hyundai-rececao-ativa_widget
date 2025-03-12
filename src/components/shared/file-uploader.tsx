@@ -277,7 +277,9 @@ function FileCard({ file, progress, onRemove, index }: FileCardProps) {
   return (
     <div className="relative flex items-center gap-2.5">
       <div className="flex flex-1 items-center gap-2.5">
-        <span className='text-muted-foreground text-sm font-bold mr-2'>{index + 1}</span>
+        <span className="text-muted-foreground text-sm font-bold mr-2">
+          {index + 1}
+        </span>
         {isFileWithPreview(file) ? <FilePreview file={file} /> : null}
         <div className="flex w-full flex-col gap-2">
           <div className="flex flex-col gap-px">
@@ -331,4 +333,3 @@ function FilePreview({ file }: FilePreviewProps) {
     <FileText className="size-10 text-muted-foreground" aria-hidden="true" />
   );
 }
-

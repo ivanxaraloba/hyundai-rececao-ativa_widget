@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { FieldProps, fieldSchema } from '@/types/types.form-builder';
+import { FieldRow, fieldRowSchema, Variants } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { useMutation } from '@tanstack/react-query';
@@ -27,31 +27,27 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { InputWithTags } from '@/components/ui/input-with-tags';
 
 interface UpdateFieldProps {
-  field: FieldProps | null;
-  onSuccess: (updatedField: FieldProps) => void;
+  field: FieldRow | null;
+  onSuccess: (updatedField: FieldRow) => void;
 }
 
-export function UpdateField({
+export function DialogUpdateField({
   field,
   onSuccess,
   ...props
 }: UpdateFieldProps & DialogProps) {
-  const form = useForm<FieldProps>({
-    resolver: zodResolver(fieldSchema),
-    defaultValues: {
-      id: '',
-      variant: field?.variant ?? '',
-      label: '',
-      placeholder: '',
-      description: '',
-      required: false,
-      disabled: false,
-    },
+  if (!field) return 'error ( missing field )';
+
+  const form = useForm<FieldRow>({
+    mode: 'onChange',
+    resolver: zodResolver(fieldRowSchema),
+    defaultValues: {},
   });
 
-  const onSubmit = (data: FieldProps) => {
+  const onSubmit = (data: FieldRow) => {
     onSuccess(data);
     props.onOpenChange!(false);
   };
@@ -62,7 +58,7 @@ export function UpdateField({
 
   return (
     <Dialog {...props}>
-      <DialogContent>
+      <DialogContent className="max-h-[85vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Edit Field</DialogTitle>
         </DialogHeader>
@@ -107,6 +103,29 @@ export function UpdateField({
                 </FormItem>
               )}
             />
+            {(['select', 'multi-select', 'radio'] as Variants[]).includes(
+              field.variant,
+            ) && (
+              <FormField
+                control={form.control}
+                name="options"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Field Options</FormLabel>
+                    <FormControl>
+                      <InputWithTags
+                        limit={30}
+                        placeholder="Adicionar nova opção ( max: 30 )"
+                        value={field.value ?? []}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="description"
@@ -129,10 +148,7 @@ export function UpdateField({
                   <FormItem className="space-y-0 flex gap-2">
                     <FormLabel>Required</FormLabel>
                     <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -145,10 +161,7 @@ export function UpdateField({
                   <FormItem className="space-y-0 flex gap-2">
                     <FormLabel>Disabled</FormLabel>
                     <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -157,7 +170,9 @@ export function UpdateField({
             </div>
             <DialogFooter>
               <DialogClose>
-                <Button variant="outline">Cancel</Button>
+                <Button type="button" variant="outline">
+                  Cancel
+                </Button>
               </DialogClose>
               <Button type="submit">Save</Button>
             </DialogFooter>
@@ -167,4 +182,3 @@ export function UpdateField({
     </Dialog>
   );
 }
-

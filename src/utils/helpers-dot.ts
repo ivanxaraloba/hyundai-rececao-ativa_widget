@@ -16,4 +16,3 @@ export const safelyUpdateDotOptions = (
     active: !!updatedOptions?.some((option) => option.active),
   };
 };
-

@@ -1,8 +1,9 @@
-import Dot from '@/pages/form/_components/dot';
 import { Damage, DotProps } from '@/types/types.config';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
+import DamageMap from '@/components/shared/damage-map';
+import DotToggle from '@/components/shared/dot-toggle';
 import FormSection from '@/components/shared/form-section';
 import {
   FormControl,
@@ -57,26 +58,19 @@ export default function SectionDamageMaps({
                 </TabsList>
 
                 <div className="border rounded-lg flex justify-center mt-2">
-                  {configVehicleState?.map((damage) => (
-                    <TabsContent key={damage.id} value={damage.id}>
-                      <div className="relative flex items-center justify-center min-w-[380px] w-[380px]">
-                        {/* image */}
-                        <img
-                          className="min-w-[380px] w-[380px] select-none pointer-events-none"
-                          src={damage.image}
-                          alt={damage.id}
-                        />
-                        {/* dots */}
+                  {configVehicleState?.map((damage, index) => (
+                    <TabsContent key={index} value={damage.id}>
+                      <DamageMap image={damage.image}>
                         {(field.value?.[damage.id]?.dots || []).map(
-                          (dot: DotProps) => (
-                            <Dot
-                              key={dot.id}
+                          (dot: DotProps, index: number) => (
+                            <DotToggle
+                              key={index}
                               dot={dot}
                               onSelect={(newDot) => updateDots(newDot, damage)}
                             />
                           ),
                         )}
-                      </div>
+                      </DamageMap>
                     </TabsContent>
                   ))}
                 </div>
@@ -89,4 +83,3 @@ export default function SectionDamageMaps({
     </FormSection>
   );
 }
-

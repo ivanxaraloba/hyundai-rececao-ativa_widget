@@ -302,7 +302,7 @@ const MultiSelectorInput = forwardRef<
       disabled={props.disabled}
       className={cn(
         'ml-2 bg-transparent outline-none placeholder:text-muted-foreground placeholder:text-sm flex-1',
-        "disabled:cursor-not-allowed disabled:opacity-50",
+        'disabled:cursor-not-allowed disabled:opacity-50',
         className,
         activeIndex !== -1 && 'caret-transparent',
       )}
@@ -394,4 +394,3 @@ export {
   MultiSelectorList,
   MultiSelectorItem,
 };
-

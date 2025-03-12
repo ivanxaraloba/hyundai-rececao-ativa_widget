@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { SectionProps, sectionSchema } from '@/types/types.form-builder';
+import { SectionProps, sectionSchema } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { useMutation } from '@tanstack/react-query';
@@ -10,22 +10,8 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
 interface UpdateSectionProps {
@@ -33,11 +19,7 @@ interface UpdateSectionProps {
   onSuccess: (updatedSection: SectionProps) => void;
 }
 
-export function UpdateSection({
-  section,
-  onSuccess,
-  ...props
-}: UpdateSectionProps & DialogProps) {
+export function DialogUpdateSection({ section, onSuccess, ...props }: UpdateSectionProps & DialogProps) {
   const form = useForm<SectionProps>({
     resolver: zodResolver(sectionSchema),
     defaultValues: {
@@ -81,7 +63,9 @@ export function UpdateSection({
 
             <DialogFooter>
               <DialogClose>
-                <Button variant="outline">Cancel</Button>
+                <Button type="button" variant="outline">
+                  Cancel
+                </Button>
               </DialogClose>
               <Button type="submit">Save</Button>
             </DialogFooter>
@@ -91,4 +75,3 @@ export function UpdateSection({
     </Dialog>
   );
 }
-

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { safelyUpdateDotOptions } from '@/helpers/helpers-dot';
 import { DotProps, OptionProps } from '@/types/types.config';
 import { X } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
@@ -20,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { safelyUpdateDotOptions } from '@/utils/helpers-dot';
 import { FormData } from '../page';
 
 export default function SectionEstimate({
@@ -49,6 +49,12 @@ export default function SectionEstimate({
     form.setValue('grouped_dots', updatedDots);
   };
 
+  const activeDots = Object.keys(dots).map((state) =>
+    dots[state].dots.map((dot: DotProps, dotIndex: number) =>
+      dot.options?.filter((option) => option.active === true),
+    ),
+  );
+
   return (
     <FormSection label="Orçamento">
       <Table>
@@ -57,7 +63,7 @@ export default function SectionEstimate({
             <TableHead></TableHead>
             <TableHead>Observação</TableHead>
             <TableHead>Área</TableHead>
-            <TableHead>Área</TableHead>
+            <TableHead>Tipo</TableHead>
             <TableHead>Orçamento</TableHead>
           </TableRow>
         </TableHeader>
@@ -114,4 +120,3 @@ export default function SectionEstimate({
     </FormSection>
   );
 }
-

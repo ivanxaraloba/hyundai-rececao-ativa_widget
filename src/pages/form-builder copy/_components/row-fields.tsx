@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LucidePencil, LucideTrash2 } from 'lucide-react';
+import { Calendar, Hash, LucidePencil, LucideTrash2, Type } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -11,14 +11,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { FORM_BUILDER } from '@/utils/constants';
+import { FORMBUILDER_FIELDS_VARIANTS } from '@/utils/constants';
+import { RowActionProps } from './tab-form';
+import { SectionProps } from '@/types/types.config';
+import { FieldRow } from '@/types/types.config';
+
+interface RowFieldProps {
+  section: SectionProps;
+  setRowAction: (action: RowActionProps) => void;
+  addField: (sectionId: string, variant: string, rowIndex: number) => void;
+  removeField: any;
+}
 
 export default function RowField({
   section,
   addField,
   removeField,
   setRowAction,
-}: any) {
+}: RowFieldProps) {
   return (
     <>
       {section.fields.map((rowFields: any, rowIndex: number) => (
@@ -28,18 +38,20 @@ export default function RowField({
             gridTemplateColumns: `repeat(${rowFields.length}, minmax(0, 1fr))`,
           }}
         >
-          {rowFields.map((field: any, fieldIndex: number) => (
+          {rowFields.map((field: FieldRow, fieldIndex: number) => (
             <div key={field.id} className="flex items-center gap-4">
               <div className="flex items-center gap-1 border rounded-xl px-3 py-1 w-full">
-                <div className="w-full text-xs truncate">{field.label}</div>
+                <div className="w-full text-xs truncate ml-2">
+                  {field.label}
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="min-w-9 min-h-9"
                   onClick={() =>
                     setRowAction({
-                      component: 'field',
-                      type: 'update',
+                      type: 'field',
+                      action: 'update',
                       item: field,
                     })
                   }
@@ -70,7 +82,7 @@ export default function RowField({
                   <DropdownMenuContent>
                     <DropdownMenuLabel>Select Component</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {FORM_BUILDER.FIELDS_VARIANTS.map((variant) => (
+                    {FORMBUILDER_FIELDS_VARIANTS.map((variant) => (
                       <DropdownMenuItem
                         key={variant}
                         onClick={() => addField(section.id, variant, rowIndex)}
@@ -88,4 +100,3 @@ export default function RowField({
     </>
   );
 }
-

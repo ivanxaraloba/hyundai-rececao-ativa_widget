@@ -13,14 +13,8 @@ module.exports = [
       'react-refresh': pluginReactRefresh,
     },
     languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-      globals: {
-        ...globals.browser,
-      },
+      parserOptions: { ecmaFeatures: { jsx: true } },
+      globals: { ...globals.browser },
     },
     rules: {
       'no-undef': 0,

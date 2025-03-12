@@ -25,12 +25,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { FORM_BUILDER } from '@/utils/constants';
-import { RowActionProps } from './tab-form-builder';
+import { FORMBUILDER_FIELDS_VARIANTS } from '@/utils/constants';
+import { RowActionProps } from './tab-form';
 
 interface SectionProps {
   section: SectionProps;
-  setRowAction: RowActionProps;
+  setRowAction: (action: RowActionProps) => void;
 }
 
 export default function Section({
@@ -38,6 +38,7 @@ export default function Section({
   setRowAction,
   removeSection,
   addField,
+  addComponent,
   children,
   ...props
 }: any & CollapsibleProps) {
@@ -51,8 +52,8 @@ export default function Section({
           size="icon"
           onClick={() =>
             setRowAction({
-              component: 'section',
-              type: 'update',
+              type: 'section',
+              action: 'update',
               item: section,
             })
           }
@@ -81,17 +82,30 @@ export default function Section({
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button variant="outline" className="rounded-full mr-4 text-xs">
-                  Add Field{''} +
+                  Add Element{''} +
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>Select Component</DropdownMenuLabel>
+                <DropdownMenuLabel>Fields</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {FORM_BUILDER.FIELDS_VARIANTS.map((variant) => (
+                {FORMBUILDER_FIELDS_VARIANTS.map((item) => (
+                  <DropdownMenuItem onClick={() => addField(section.id, item)}>
+                    {item}
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Components</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {[
+                  {
+                    label: 'Maps',
+                    value: 'maps',
+                  },
+                ].map((item) => (
                   <DropdownMenuItem
-                    onClick={() => addField(section.id, variant)}
+                    onClick={() => addComponent(section.id, item.value)}
                   >
-                    {variant}
+                    {item.label}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -102,4 +116,3 @@ export default function Section({
     </Collapsible>
   );
 }
-

@@ -12,8 +12,7 @@ import { useGlobalStore } from './stores/global.js';
 // https://www.zoho.com/creator/newhelp/app-settings/widgets/creator-api-for-widgets.html#getallrecords
 ZOHO.CREATOR.init()
   .then(() => {
-    const params = ZOHO.CREATOR.UTIL.getQueryParams();
-    console.log(params);
+    console.log('ZOHO.CREATOR SDK', ZOHO.CREATOR);
     useGlobalStore.setState({ zohoInitialized: true });
   })
   .catch((err: any) => {

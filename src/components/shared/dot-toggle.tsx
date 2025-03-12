@@ -1,31 +1,23 @@
 import React from 'react';
 
-import { safelyUpdateDotOptions } from '@/helpers/helpers-dot';
 import { cn } from '@/lib/utils';
 import { DotProps, OptionProps } from '@/types/types.config';
 import { ScrollText } from 'lucide-react';
 
+import Dot from '@/components/shared/dot';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { safelyUpdateDotOptions } from '@/utils/helpers-dot';
 
-interface DotComponentProps {
+interface DotToggleProps {
   dot: DotProps;
   onSelect: (newDot: DotProps) => void;
   disabled?: boolean;
 }
 
-const Dot: React.FC<DotComponentProps> = ({ dot, onSelect, disabled }) => {
+export default function DotToggle({ dot, onSelect, disabled }: DotToggleProps) {
   const updateDotOption = (modifiedOption: OptionProps) => {
     onSelect(safelyUpdateDotOptions(dot, modifiedOption));
   };
@@ -43,27 +35,15 @@ const Dot: React.FC<DotComponentProps> = ({ dot, onSelect, disabled }) => {
           }}
         >
           <Popover>
-            <PopoverTrigger asChild>
-              <input
-                type="text"
-                readOnly
-                className={cn(
-                  'rounded-full truncate focus:z-10 transition-transform size-6 text-xs text-center text-primary-foreground',
-                  dot.active ? 'bg-red-400' : 'bg-gray-600',
-                  disabled && 'pointer-events-none',
-                  'outline-none ring-0 cursor-pointer',
-                )}
-                value=""
-              />
+            <PopoverTrigger>
+              <Dot className={cn(dot.active && 'bg-red-400', disabled && 'pointer-events-none')} />
             </PopoverTrigger>
 
             {dot.options && dot.options?.length > 0 && (
               <PopoverContent side="right" className="flex flex-col gap-2">
                 <div className="grid">
                   <h4 className="font-medium leading-none">Danos</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Selecione o tipo de dano
-                  </p>
+                  <p className="text-sm text-muted-foreground">Selecione o tipo de dano</p>
                 </div>
 
                 {dot.options?.map((option) => (
@@ -110,7 +90,4 @@ const Dot: React.FC<DotComponentProps> = ({ dot, onSelect, disabled }) => {
       </Tooltip>
     </TooltipProvider>
   );
-};
-
-export default Dot;
-
+}

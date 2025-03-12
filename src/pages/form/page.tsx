@@ -8,6 +8,7 @@ import {
   FieldRow,
 } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ChevronRight, Cog, Wrench } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -110,7 +111,7 @@ export default function PageForm() {
 
   useEffect(() => {
     const fetch = async () => {
-      const params = ZOHO.CREATOR.UTIL.getQueryParams();
+      const params = await ZOHO.CREATOR.UTIL.getQueryParams();
       for (const key of Object.keys(params)) {
         form.setValue(key, params[key], {
           shouldValidate: true,
@@ -122,24 +123,41 @@ export default function PageForm() {
   }, [form, ZOHO]);
 
   return (
-    <div className="max-w-4xl mx-auto p-10">
-      <img
-        src={config?.logo}
-        alt="logo_hyundai"
-        loading="lazy"
-        className="pb-20 mx-auto max-w-xs"
-      />
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-          <SectionVehicleInfo form={form} />
-          <SectionDamageMaps form={form} />
-          <SectionEstimate form={form} />
-          <SectionCustomization form={form} />
-          <SectionUploadImages form={form} />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-    </div>
+    <>
+      <a
+        href="https://creatorapp.zoho.com/crmhyundai/rececao-ativa/#Report:Widget_Config_Report"
+        target="_blank"
+        className="absolute top-10 right-10"
+      >
+        <Button size="icon" variant="secondary">
+          <Wrench />
+        </Button>
+      </a>
+      <div className="max-w-4xl mx-auto p-10 pb-40">
+        <img
+          src={config?.logo}
+          alt="logo_hyundai"
+          loading="lazy"
+          className="pb-20 mx-auto max-w-xs"
+        />
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+            <SectionVehicleInfo form={form} />
+            <SectionDamageMaps form={form} />
+            <SectionEstimate form={form} />
+            <SectionCustomization form={form} />
+            <SectionUploadImages form={form} />
+            <div className="flex justify-center w-full">
+              <Button
+                type="submit"
+                className="w-full max-w-40 rounded-full py-6"
+              >
+                Enviar
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 }
-
