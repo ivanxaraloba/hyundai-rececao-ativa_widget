@@ -13,17 +13,8 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { FORMBUILDER_FIELDS_VARIANTS, VARIANT } from '@/utils/constants';
+import {  VARIANT } from '@/utils/constants';
 import { RowActionProps } from '../page';
-import DropdownFields from './dropdown-fields';
 
 interface RowFieldProps {
   key: string;
@@ -46,10 +37,10 @@ export default function RowField({
       id={key}
       key={key}
       value={rowFields}
-      className="flex items-center gap-2 w-full"
       layout="position"
       dragListener={false}
       dragControls={dragControls}
+      className="flex items-center gap-2 w-full bg-background"
     >
       <GripVertical
         className="cursor-grab size-4"

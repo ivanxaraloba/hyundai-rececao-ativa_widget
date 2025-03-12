@@ -57,7 +57,7 @@ export default function Section({
     >
       <Collapsible
         {...props}
-        className="group border rounded-xl py-2 px-4 shadow-sm"
+        className="group border rounded-xl py-2 px-4 shadow-sm bg-background"
       >
         <div className="flex items-center gap-1 w-full">
           <GripVertical
