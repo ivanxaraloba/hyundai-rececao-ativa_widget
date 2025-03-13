@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Variants } from '@/types/types.config';
+import { VariantsProps } from '@/types/types.config';
 import { Sparkles } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -17,16 +17,12 @@ import { FORMBUILDER_FIELDS_VARIANTS, VARIANT } from '@/utils/constants';
 import { newSchemaProps } from '../page ( sections with form )';
 
 interface DropdownFieldsProps {
-  onSelect: (value: Variants) => void;
+  onSelect: (value: VariantsProps) => void;
   form?: UseFormReturn<newSchemaProps>;
   children: React.ReactNode;
 }
 
-export default function DropdownFields({
-  onSelect,
-  form,
-  children,
-}: DropdownFieldsProps) {
+export default function DropdownFields({ onSelect, form, children }: DropdownFieldsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
@@ -49,9 +45,7 @@ export default function DropdownFields({
               // }
             >
               {/* {variantDetails.icon && <variantDetails.icon className='!size-3' />} */}
-              {variantDetails.type == 'custom' && (
-                <Sparkles className="!size-3" />
-              )}
+              {variantDetails.type == 'custom' && <Sparkles className="!size-3" />}
               {variantDetails?.label}
             </DropdownMenuItem>
           );

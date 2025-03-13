@@ -1,4 +1,4 @@
-import { Variants } from '@/types/types.config';
+import { VariantsProps } from '@/types/types.config';
 import {
   Calendar,
   List,
@@ -30,7 +30,7 @@ export const FORMBUILDER_FIELDS_VARIANTS = [
 ] as const;
 
 export const VARIANT: Record<
-  Variants,
+  VariantsProps,
   {
     label: string;
     type: 'default' | 'custom';

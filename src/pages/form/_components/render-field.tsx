@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { cn } from '@/lib/utils';
-import { FieldRow } from '@/types/types.config';
+import { FieldRowProps } from '@/types/types.config';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
@@ -46,7 +46,7 @@ export default function RenderField({
   configField,
   form,
 }: {
-  configField: FieldRow;
+  configField: FieldRowProps;
   form: UseFormReturn<any>;
 }) {
   const fieldOptions = splitOptions(configField?.options);

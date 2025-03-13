@@ -1,40 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { cn } from '@/lib/utils';
 import { SectionProps } from '@/types/types.config';
 import { CollapsibleProps } from '@radix-ui/react-collapsible';
-import { DragControls, Reorder, useDragControls } from 'framer-motion';
-import {
-  ChevronDown,
-  ChevronUp,
-  GripVertical,
-  LucideColumns2,
-  LucidePencil,
-  LucideTrash2,
-  Plus,
-} from 'lucide-react';
+import { Reorder, useDragControls } from 'framer-motion';
+import { ChevronDown, ChevronUp, GripVertical, LucidePencil, LucideTrash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { FORMBUILDER_FIELDS_VARIANTS, VARIANT } from '@/utils/constants';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { RowActionProps } from '../page';
-import DropdownFields from './dropdown-fields';
 
 interface SectionComponentProps {
   section: SectionProps;
   setRowAction: (action: RowActionProps) => void;
-  removeSection: any;
+  removeSection: (id: SectionProps['id']) => void;
 }
 
 export default function Section({
@@ -44,41 +23,51 @@ export default function Section({
   children,
   ...props
 }: SectionComponentProps & CollapsibleProps) {
+  const [draggable, setDraggable] = useState(false);
   const dragControls = useDragControls();
 
   return (
     <Reorder.Item
       id={section.id}
-      key={section.id}
       value={section}
       dragListener={false}
       dragControls={dragControls}
+      onDragStart={() => {
+        setDraggable(true);
+        document.body.style.userSelect = 'none';
+      }}
+      onDragEnd={() => {
+        setDraggable(false);
+        document.body.style.userSelect = '';
+      }}
       layout="position"
+      data-section-id={section.id}
     >
       <Collapsible
         {...props}
-        className="group border rounded-xl py-2 px-4 shadow-sm bg-background"
+        className={cn('group border rounded-xl shadow-sm bg-background', draggable && 'shadow-lg')}
       >
-        <div className="flex items-center gap-1 w-full">
-          <GripVertical
-            className="cursor-grab size-4"
-            onPointerDown={(e) => dragControls?.start(e)}
-          />
-          <div className="w-full text-sm font-medium ml-2">{section.label}</div>
+        <div className="flex items-center gap-1 w-full bg-secondary p-2 group-data-[state=closed]:rounded-xl group-data-[state=open]:rounded-t-xl">
           <Button
+            type="button"
             variant="ghost"
             size="icon"
-            onClick={() =>
-              setRowAction({
-                type: 'section',
-                action: 'update',
-                item: section,
-              })
-            }
+            className="cursor-grab"
+            onPointerDown={(e) => dragControls.start(e)}
+          >
+            <GripVertical />
+          </Button>
+          <div className="w-full text-sm font-medium ml-2">{section.label}</div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => setRowAction({ type: 'section', action: 'update', item: section })}
           >
             <LucidePencil />
           </Button>
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             onClick={() => removeSection(section.id)}
@@ -86,15 +75,15 @@ export default function Section({
             <LucideTrash2 />
           </Button>
           <CollapsibleTrigger>
-            <Button variant="ghost" size="icon">
+            <Button type="button" variant="ghost" size="icon">
               <ChevronDown className="group-data-[state=open]:hidden" />
               <ChevronUp className="group-data-[state=closed]:hidden" />
             </Button>
           </CollapsibleTrigger>
         </div>
         <CollapsibleContent>
-          <hr className="mt-2" />
-          <div className="mt-6 mb-4 space-y-2 px-8">{children}</div>
+          <hr />
+          <div className="my-4 space-y-2 px-8">{children}</div>
         </CollapsibleContent>
       </Collapsible>
     </Reorder.Item>

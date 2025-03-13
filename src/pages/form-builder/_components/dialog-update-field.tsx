@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { FieldRow, fieldRowSchema, Variants } from '@/types/types.config';
+import { FieldRowProps, fieldRowSchema, VariantsProps } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { useMutation } from '@tanstack/react-query';
@@ -30,24 +30,20 @@ import { Input } from '@/components/ui/input';
 import { InputWithTags } from '@/components/ui/input-with-tags';
 
 interface UpdateFieldProps {
-  field: FieldRow | null;
-  onSuccess: (updatedField: FieldRow) => void;
+  field: FieldRowProps | null;
+  onSuccess: (updatedField: FieldRowProps) => void;
 }
 
-export function DialogUpdateField({
-  field,
-  onSuccess,
-  ...props
-}: UpdateFieldProps & DialogProps) {
+export function DialogUpdateField({ field, onSuccess, ...props }: UpdateFieldProps & DialogProps) {
   if (!field) return 'error ( missing field )';
 
-  const form = useForm<FieldRow>({
+  const form = useForm<FieldRowProps>({
     mode: 'onChange',
     resolver: zodResolver(fieldRowSchema),
     defaultValues: {},
   });
 
-  const onSubmit = (data: FieldRow) => {
+  const onSubmit = (data: FieldRowProps) => {
     onSuccess(data);
     props.onOpenChange!(false);
   };
@@ -103,9 +99,7 @@ export function DialogUpdateField({
                 </FormItem>
               )}
             />
-            {(['select', 'multi-select', 'radio'] as Variants[]).includes(
-              field.variant,
-            ) && (
+            {(['select', 'multi-select', 'radio'] as VariantsProps[]).includes(field.variant) && (
               <FormField
                 control={form.control}
                 name="options"

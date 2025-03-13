@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
 import {
-  Config,
-  Damage,
+  ConfigProps,
+  MapProps,
   DotProps,
   dotSchema,
-  FieldRow,
+  FieldRowProps,
 } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Cog, Wrench } from 'lucide-react';
@@ -21,7 +21,7 @@ import SectionEstimate from './_components/section-estimate';
 import SectionUploadImages from './_components/section-upload-images';
 import SectionVehicleInfo from './_components/section-vehicle-info';
 
-const createFormSchema = (config: Config) => {
+const createFormSchema = (config: ConfigProps) => {
   const schemaFields: Record<string, z.ZodType<any, any, any>> = {
     grouped_dots: z.record(
       z.object({
@@ -33,7 +33,7 @@ const createFormSchema = (config: Config) => {
 
   Object.values(config.fields_sections)
     .flat()
-    .forEach((configField: FieldRow) => {
+    .forEach((configField: FieldRowProps) => {
       let fieldSchema: any;
 
       if (configField.type === 'number') {
@@ -90,7 +90,7 @@ export default function PageForm() {
       fim_de_garantia: new Date(),
       grouped_dots: Array.isArray(config?.damage_maps)
         ? config.damage_maps.reduce<Record<string, any>>(
-            (acc, damage: Damage) => {
+            (acc, damage: MapProps) => {
               if (damage?.dots) {
                 acc[damage.id] = {
                   label: damage.label,

@@ -1,73 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { FieldRow, SectionProps } from '@/types/types.config';
+import { cn } from '@/lib/utils';
+import { FieldRowProps } from '@/types/types.config';
 import { Reorder, useDragControls } from 'framer-motion';
-import {
-  Calendar,
-  GripVertical,
-  Hash,
-  LucidePencil,
-  LucideTrash2,
-  Type,
-} from 'lucide-react';
+import { GripVertical, LucidePencil, LucideTrash2 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {  VARIANT } from '@/utils/constants';
+import { VARIANT } from '@/utils/constants';
 import { RowActionProps } from '../page';
 
 interface RowFieldProps {
-  key: string;
-  rowFields: FieldRow[];
+  rowFields: FieldRowProps[];
   setRowAction: (action: RowActionProps) => void;
   removeField: (fieldId: string) => void;
   children: React.ReactNode;
+  value: FieldRowProps[];
+  onFieldDrop: (event: any) => void;
 }
 
 export default function RowField({
-  key,
   rowFields,
   removeField,
   setRowAction,
   children,
+  value,
+  onFieldDrop,
 }: RowFieldProps) {
+  const [draggable, setDraggable] = useState(false);
   const dragControls = useDragControls();
+
   return (
     <Reorder.Item
-      id={key}
-      key={key}
-      value={rowFields}
+      value={value}
+      id={rowFields[0].id}
+      onDragStart={() => {
+        setDraggable(true);
+        document.body.style.userSelect = 'none';
+      }}
+      onDragEnd={(e) => {
+        onFieldDrop(e);
+        setDraggable(false);
+        document.body.style.userSelect = '';
+      }}
       layout="position"
       dragListener={false}
       dragControls={dragControls}
-      className="flex items-center gap-2 w-full bg-background"
+      className={cn(
+        'flex items-center gap-2 w-full select-none',
+        draggable && 'pointer-events-none cursor-grab',
+      )}
+      data-field-row
     >
-      <GripVertical
-        className="cursor-grab size-4"
-        onPointerDown={(e) => dragControls?.start(e)}
-      />
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="min-w-9 w-9 h-9 cursor-grab"
+        onPointerDown={(e) => dragControls.start(e)}
+      >
+        <GripVertical />
+      </Button>
       <div
         className="grid gap-4 w-full"
         style={{
           gridTemplateColumns: `repeat(${rowFields.length}, minmax(0, 1fr))`,
         }}
       >
-        {rowFields.map((field: FieldRow, fieldIndex: number) => {
+        {rowFields.map((field) => {
           const variantDetails = VARIANT[field.variant];
 
           return (
             <div key={field.id} className="flex items-center gap-4">
-              <div className="flex items-center gap-1 border rounded-xl px-3 py-1 w-full">
-                {variantDetails.icon && (
-                  <variantDetails.icon className="!size-3" />
-                )}
+              <div className="flex items-center gap-1 border rounded-xl px-3 py-1 w-full bg-background">
+                {variantDetails.icon && <variantDetails.icon className="!size-3" />}
                 <div className="text-xs truncate ml-2">{field.label}</div>
                 <div className="ml-2 items-center gap-2 md:flex hidden">
                   {field.required && (
-                    <Badge
-                      variant="destructive"
-                      className="text-[8px] uppercase"
-                    >
+                    <Badge variant="destructive" className="text-[8px] uppercase">
                       required
                     </Badge>
                   )}
@@ -79,6 +89,7 @@ export default function RowField({
                 </div>
                 <div className="ml-auto">
                   <Button
+                    type="button"
                     variant="ghost"
                     size="icon"
                     className="min-w-9 min-h-9"
@@ -93,6 +104,7 @@ export default function RowField({
                     <LucidePencil />
                   </Button>
                   <Button
+                    type="button"
                     variant="ghost"
                     size="icon"
                     className="min-w-9 min-h-9"

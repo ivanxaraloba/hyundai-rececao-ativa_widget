@@ -1,5 +1,5 @@
 import { DotProps } from '@/types/types.config';
-import type { Config, Damage } from '@/types/types.config.js';
+import type { ConfigProps, MapProps } from '@/types/types.config.js';
 import { create } from 'zustand';
 
 import { splitOptions } from '@/utils/generic';
@@ -7,28 +7,22 @@ import { splitOptions } from '@/utils/generic';
 interface GlobalStore {
   zohoInitialized: boolean;
   recordId: string | null;
-  config: Config | null;
+  config: ConfigProps | null;
   getConfig: ({
     appName,
     reportName,
   }: {
     appName: string;
     reportName: string;
-  }) => Promise<Config | null>;
-  setConfig: (config: Config) => void;
+  }) => Promise<ConfigProps | null>;
+  setConfig: (config: ConfigProps) => void;
 }
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
   zohoInitialized: false,
   recordId: null,
   config: null,
-  getConfig: async ({
-    appName,
-    reportName,
-  }: {
-    appName: string;
-    reportName: string;
-  }) => {
+  getConfig: async ({ appName, reportName }: { appName: string; reportName: string }) => {
     const paramsForm = {
       appName,
       reportName,
@@ -50,43 +44,18 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 
       set({ recordId: configId });
 
-      const { data } = await ZOHO.CREATOR.API.getRecordById({
+      const { data: record } = await ZOHO.CREATOR.API.getRecordById({
         ...paramsForm,
         id: configId,
       });
 
-      const config = JSON.parse(data.config_1);
+      let config = null;
 
-      const configFormatted = config;
-      // const configFormatted = {
-      //   ...config,
-      //   damage_maps: config?.damage_maps?.map((damage: Damage) => {
-      //     const options =
-      //       typeof damage.options === 'string'
-      //         ? splitOptions(damage.options)
-      //         : [];
-      //     return {
-      //       ...damage,
-      //       options,
-      //       dots:
-      //         typeof damage.dots === 'string' &&
-      //         JSON.parse(damage.dots).map((dot: DotProps) => ({
-      //           ...dot,
-      //           active: false,
-      //           options: options.map((option: string) => ({
-      //             label: option,
-      //             value: option,
-      //             active: false,
-      //             estimate: false,
-      //           })),
-      //         })),
-      //     };
-      //   }),
-      // };
+      if (record.config_1) config = JSON.parse(record.config_1);
 
-      console.log({ configFormatted });
+      console.log({ config });
 
-      set({ config: configFormatted });
+      set({ config });
       return config;
     } catch (error: any) {
       throw error instanceof Error
@@ -96,7 +65,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
           : new Error('Unknown error occurred');
     }
   },
-  setConfig: (config: Config) => {
+  setConfig: (config: ConfigProps) => {
     set({ config });
   },
 }));

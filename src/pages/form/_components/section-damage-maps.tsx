@@ -1,4 +1,4 @@
-import { Damage, DotProps } from '@/types/types.config';
+import { MapProps, DotProps } from '@/types/types.config';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -23,7 +23,7 @@ export default function SectionDamageMaps({
   const { config } = useGlobalStore();
   const configVehicleState = config?.damage_maps;
 
-  const updateDots = (newDot: DotProps, damage: Damage) => {
+  const updateDots = (newDot: DotProps, damage: MapProps) => {
     const currentDots = form.getValues('grouped_dots');
     const updatedDamage = currentDots[damage.id]?.dots || [];
 
