@@ -57,7 +57,7 @@ export default function Section({
           >
             <GripVertical />
           </Button>
-          <div className="w-full text-sm font-medium ml-2">{section.label}</div>
+          <span className="w-full text-sm font-medium ml-2">{section.label}</span>
           <Button
             type="button"
             variant="ghost"

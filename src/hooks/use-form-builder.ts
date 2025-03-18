@@ -12,7 +12,13 @@ export const useFormBuilder = () => {
   const [config, setConfig] = useState<ConfigProps | null>(
     cfg || {
       logo: '',
-      sections: [],
+      sections: [
+        {
+          id: `section_${Date.now()}_1`,
+          label: 'New Section',
+          fields: [],
+        },
+      ],
     },
   );
 

@@ -14,14 +14,23 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Reorder, useDragControls } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Edit2, Eye, EyeOff, ImageIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import ButtonLoading from '@/components/ui/button-loading';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { H2, H3, H4, Muted } from '@/components/ui/typography';
 import { useGlobalStore } from '@/stores/global';
 import { CREATOR_FORM_CONFIG } from '@/utils/constants';
@@ -46,7 +55,8 @@ export type RowActionProps =
 
 export default function PageFormBuilder() {
   const [rowAction, setRowAction] = useState<RowActionProps | null>(null);
-  const { config, fields, sections, mutationSave } = useFormBuilder();
+  const { config, setConfig, fields, sections, mutationSave } = useFormBuilder();
+  const [viewImage, setViewImage] = useState(false);
 
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const toggleAllSections = () => {
@@ -63,25 +73,12 @@ export default function PageFormBuilder() {
   };
 
   return (
-    <div className="space-y-10 md:px-28">
+    <div className="space-y-10 max-w-4xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
           <H3>Configurador</H3>
           <Muted>Configure o formulário e os mapas de dano</Muted>
         </div>
-        <Button type="button" variant="outline" onClick={toggleAllSections}>
-          {config?.sections.every((section) => openSections[section.id]) ? (
-            <>
-              <span>Collapse All</span>
-              <ChevronUp />
-            </>
-          ) : (
-            <>
-              <span>Expand All</span>
-              <ChevronDown />
-            </>
-          )}
-        </Button>
       </div>
 
       <Reorder.Group
@@ -90,6 +87,54 @@ export default function PageFormBuilder() {
         onReorder={sections.reorder}
         className="space-y-4"
       >
+        {viewImage && (
+          <img src={config?.logo} alt="brand_logo" loading="lazy" className="mx-auto max-h-36" />
+        )}
+        <div className="w-full flex justify-end">
+          <Button type="button" variant="outline" onClick={toggleAllSections}>
+            {config?.sections.every((section) => openSections[section.id]) ? (
+              <>
+                <span>Collapse All</span>
+                <ChevronUp />
+              </>
+            ) : (
+              <>
+                <span>Expand All</span>
+                <ChevronDown />
+              </>
+            )}
+          </Button>
+        </div>
+        <div className="border bg-secondary p-2 flex items-center rounded-xl group focus-within:ring-1 focus-within:ring-ring">
+          <label htmlFor="vehicle2" className="w-9 grid place-items-center">
+            <ImageIcon className="size-4" />
+          </label>
+          <Input
+            id="vehicle2"
+            value={config?.logo || ''}
+            onChange={(e) =>
+              setConfig((prev) => ({
+                ...prev,
+                logo: e.target.value,
+                sections: prev?.sections || [],
+              }))
+            }
+            className="!border-none !outline-none !ring-0 !shadow-none"
+            placeholder="Brand Logo ( www.example.com/logo.png )"
+          />
+
+          {config?.logo && (
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              onClick={() => setViewImage(!viewImage)}
+            >
+              {viewImage ? <EyeOff /> : <Eye />}
+            </Button>
+          )}
+        </div>
+
         {config?.sections.map((section) => (
           <Section
             key={section.id}
@@ -185,7 +230,7 @@ export default function PageFormBuilder() {
         )
       )}
 
-      <div className="sticky bottom-4 flex justify-center">
+      <div className="fixed w-full left-0 bottom-5 flex justify-center">
         <ButtonLoading
           type="submit"
           className="w-fit rounded-full p-6"

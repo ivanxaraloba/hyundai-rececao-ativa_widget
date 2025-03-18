@@ -1,12 +1,6 @@
 import { useEffect } from 'react';
 
-import {
-  ConfigProps,
-  MapProps,
-  DotProps,
-  dotSchema,
-  FieldRowProps,
-} from '@/types/types.config';
+import { ConfigProps, DotProps, dotSchema, FieldRowProps, MapProps } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Cog, Wrench } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -46,10 +40,7 @@ const createFormSchema = (config: ConfigProps) => {
         fieldSchema = z.string();
       } else if (configField.variant === 'date') {
         fieldSchema = z.date();
-      } else if (
-        configField.variant === 'multi-select' ||
-        configField.variant === 'radio'
-      ) {
+      } else if (configField.variant === 'multi-select' || configField.variant === 'radio') {
         fieldSchema = z.unknown();
       }
 
@@ -89,18 +80,15 @@ export default function PageForm() {
       data_proxima_itv: new Date(),
       fim_de_garantia: new Date(),
       grouped_dots: Array.isArray(config?.damage_maps)
-        ? config.damage_maps.reduce<Record<string, any>>(
-            (acc, damage: MapProps) => {
-              if (damage?.dots) {
-                acc[damage.id] = {
-                  label: damage.label,
-                  dots: damage.dots,
-                };
-              }
-              return acc;
-            },
-            {},
-          )
+        ? config.damage_maps.reduce<Record<string, any>>((acc, damage: MapProps) => {
+            if (damage?.dots) {
+              acc[damage.id] = {
+                label: damage.label,
+                dots: damage.dots,
+              };
+            }
+            return acc;
+          }, {})
         : {},
     },
   });
@@ -148,10 +136,7 @@ export default function PageForm() {
             <SectionCustomization form={form} />
             <SectionUploadImages form={form} />
             <div className="flex justify-center w-full">
-              <Button
-                type="submit"
-                className="w-full max-w-40 rounded-full py-6"
-              >
+              <Button type="submit" className="w-full max-w-40 rounded-full py-6">
                 Enviar
               </Button>
             </div>
