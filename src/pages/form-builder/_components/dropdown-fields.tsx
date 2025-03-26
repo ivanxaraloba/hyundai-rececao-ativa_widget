@@ -14,15 +14,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { FORMBUILDER_FIELDS_VARIANTS, VARIANT } from '@/utils/constants';
-import { newSchemaProps } from '../page ( sections with form )';
 
 interface DropdownFieldsProps {
   onSelect: (value: VariantsProps) => void;
-  form?: UseFormReturn<newSchemaProps>;
   children: React.ReactNode;
 }
 
-export default function DropdownFields({ onSelect, form, children }: DropdownFieldsProps) {
+export default function DropdownFields({ onSelect, children }: DropdownFieldsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
@@ -32,18 +30,19 @@ export default function DropdownFields({ onSelect, form, children }: DropdownFie
         {FORMBUILDER_FIELDS_VARIANTS.map((variantValue) => {
           const variantDetails = VARIANT[variantValue];
           return (
-            <DropdownMenuItem
-              key={variantValue}
-              onClick={() => onSelect(variantValue)}
-              // disabled={
-              //   variantValue === 'maps' &&
-              //   !!form
-              //     .watch('sections')
-              //     .find((s) =>
-              //       s.fields.find((rowF) => rowF.find((f) => f.variant == 'maps')),
-              //     )
-              // }
-            >
+            // <DropdownMenuItem>
+            //   <div
+            //     className="flex size-8 items-center justify-center rounded-lg border border-border bg-background"
+            //     aria-hidden="true"
+            //   >
+            //     {variantDetails.icon && <variantDetails.icon className="!size-3" />}
+            //   </div>
+            //   <div>
+            //     <div className="text-sm font-medium">{variantDetails?.label}</div>
+            //     <div className="text-xs text-muted-foreground">Start writing with plain text</div>
+            //   </div>
+            // </DropdownMenuItem>
+            <DropdownMenuItem key={variantValue} onClick={() => onSelect(variantValue)}>
               {/* {variantDetails.icon && <variantDetails.icon className='!size-3' />} */}
               {variantDetails.type == 'custom' && <Sparkles className="!size-3" />}
               {variantDetails?.label}

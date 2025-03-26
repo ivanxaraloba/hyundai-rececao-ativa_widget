@@ -51,7 +51,7 @@ export default function SectionVehicleInfo({
         return (
           <RenderField
             key={configField.id}
-            configField={configField}
+            field={configField}
             form={form}
           />
         );

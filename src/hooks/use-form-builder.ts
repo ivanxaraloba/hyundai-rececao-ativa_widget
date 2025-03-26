@@ -8,7 +8,7 @@ import { useGlobalStore } from '@/stores/global';
 import { CREATOR_FORM_CONFIG, VARIANT } from '@/utils/constants';
 
 export const useFormBuilder = () => {
-  const { config: cfg, recordId } = useGlobalStore();
+  const { config: cfg, setConfig: setCfg, recordId } = useGlobalStore();
   const [config, setConfig] = useState<ConfigProps | null>(
     cfg || {
       logo: '',
@@ -110,15 +110,13 @@ export const useFormBuilder = () => {
     });
   };
 
-  const editField = (updatedField: FieldRowProps) => {
+  const editField = (updatedField: FieldRowProps, oldFieldId: FieldRowProps['id']) => {
     setConfig((prevConfig) => {
       if (prevConfig) {
         const updatedSections = prevConfig.sections.map((section) => ({
           ...section,
           fields: section.fields.map((row) =>
-            row.map((field) =>
-              field.id === updatedField.id ? { ...field, ...updatedField } : field,
-            ),
+            row.map((field) => (field.id === oldFieldId ? { ...field, ...updatedField } : field)),
           ),
         }));
 
@@ -267,6 +265,7 @@ export const useFormBuilder = () => {
     },
     onSuccess: async () => {
       toast.success('Configuração guardada com sucesso');
+      setCfg(config as any);
     },
     onError: (err) => {
       toast.error('Erro ao guardar a configuração');

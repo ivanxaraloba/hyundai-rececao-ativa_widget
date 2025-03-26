@@ -1,25 +1,16 @@
-import { MapProps, DotProps } from '@/types/types.config';
+import { DotProps, MapProps } from '@/types/types.config';
 import { UseFormReturn } from 'react-hook-form';
 import * as z from 'zod';
 
 import DamageMap from '@/components/shared/damage-map';
 import DotToggle from '@/components/shared/dot-toggle';
 import FormSection from '@/components/shared/form-section';
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useGlobalStore } from '@/stores/global';
 import { FormData } from '../page';
 
-export default function SectionDamageMaps({
-  form,
-}: {
-  form: UseFormReturn<FormData>;
-}) {
+export default function SectionDamageMaps({ form }: { form: UseFormReturn<FormData> }) {
   const { config } = useGlobalStore();
   const configVehicleState = config?.damage_maps;
 

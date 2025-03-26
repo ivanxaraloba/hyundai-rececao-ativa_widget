@@ -31,7 +31,7 @@ import { InputWithTags } from '@/components/ui/input-with-tags';
 
 interface UpdateFieldProps {
   field: FieldRowProps | null;
-  onSuccess: (updatedField: FieldRowProps) => void;
+  onSuccess: (updatedField: FieldRowProps, oldFieldId: FieldRowProps['id']) => void;
 }
 
 export function DialogUpdateField({ field, onSuccess, ...props }: UpdateFieldProps & DialogProps) {
@@ -44,7 +44,7 @@ export function DialogUpdateField({ field, onSuccess, ...props }: UpdateFieldPro
   });
 
   const onSubmit = (data: FieldRowProps) => {
-    onSuccess(data);
+    onSuccess(data, field.id);
     props.onOpenChange!(false);
   };
 

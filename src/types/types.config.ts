@@ -4,24 +4,28 @@ import { FORMBUILDER_FIELDS_VARIANTS } from '@/utils/constants';
 
 export const optionSchema = z.object({
   label: z.string(),
-  value: z.any(),
-  active: z.boolean().optional(),
+  value: z.string(),
   estimate: z.boolean().optional(),
 });
 
 export const dotSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   x: z.number(),
   y: z.number(),
   name: z.string(),
-  active: z.boolean(),
-  options: z.array(optionSchema),
 });
 
 export const mapSchema = z.object({
   id: z.string().min(1, 'Id is required'),
   label: z.string().min(1, 'Label is required'),
-  options: z.array(z.string()).min(1, 'At least one option is required'),
+  options_label: z.string().min(1, 'Options label is required'),
+  options_description: z.string().min(1, 'Options label is required'),
+  options: z
+    .array(optionSchema)
+    .default([])
+    .refine((options) => options.length === 0 || options.every((opt) => opt.label && opt.value), {
+      message: 'All options must have both label and value',
+    }),
   image: z.string().min(1, 'Image is required'),
   dots: z.array(dotSchema).min(1, 'At least one dot is required'),
 });

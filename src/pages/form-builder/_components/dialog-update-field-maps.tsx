@@ -26,7 +26,7 @@ import { Label } from '@/components/ui/label';
 
 interface UpdateFieldMapsProps {
   field: FieldRowProps | null;
-  onSuccess: (updatedField: FieldRowProps) => void;
+  onSuccess: (updatedField: FieldRowProps, oldFieldId: FieldRowProps['id']) => void;
 }
 
 export default function DialogUpdateFieldMaps({
@@ -45,6 +45,8 @@ export default function DialogUpdateFieldMaps({
         image: '',
         dots: [],
         options: [],
+        options_label: '',
+        options_description: '',
       },
     ],
   );
@@ -57,7 +59,9 @@ export default function DialogUpdateFieldMaps({
       label: maps[0]?.label || '',
       image: maps[0]?.image || '',
       dots: maps[0]?.dots || [],
-      options: maps[0]?.options || [],
+      options: maps[0]?.options || undefined,
+      options_label: maps[0]?.options_label || '',
+      options_description: maps[0]?.options_description || '',
     },
   });
 
@@ -72,7 +76,7 @@ export default function DialogUpdateFieldMaps({
       : [
           ...(formMap.getValues('dots') || []),
           {
-            id: Date.now(),
+            id: Date.now().toString(),
             name: `Dot ${Date.now()}`,
             x,
             y,
@@ -94,6 +98,8 @@ export default function DialogUpdateFieldMaps({
       image: '',
       dots: [],
       options: [],
+      options_label: '',
+      options_description: '',
     };
     setMaps([...maps, newMap]);
     formMap.reset(newMap);
@@ -108,10 +114,15 @@ export default function DialogUpdateFieldMaps({
     const updatedMaps = maps.map((map) => (map.id === data.id ? data : map));
     setMaps(updatedMaps);
 
-    onSuccess({
-      ...field,
-      maps: updatedMaps,
-    });
+    console.log(updatedMaps);
+
+    onSuccess(
+      {
+        ...field,
+        maps: updatedMaps,
+      },
+      field.id,
+    );
     props.onOpenChange?.(false);
   };
 
@@ -162,6 +173,99 @@ export default function DialogUpdateFieldMaps({
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={formMap.control}
+                name="options_label"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Options Label</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={formMap.control}
+                name="options_description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Options Description</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={formMap.control}
+                name="options"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Map Options</FormLabel>
+                    <FormControl>
+                      <div className="flex flex-col gap-2">
+                        {field.value?.map((option, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              onClick={() => {
+                                const newOptions = field.value.filter((_, i) => i !== index);
+                                field.onChange(newOptions);
+                              }}
+                            >
+                              <X />
+                            </Button>
+                            <Input
+                              placeholder="Label"
+                              value={option.label}
+                              onChange={(e) => {
+                                const newOptions = [...field.value];
+                                newOptions[index] = {
+                                  ...newOptions[index],
+                                  label: e.target.value,
+                                };
+                                field.onChange(newOptions);
+                              }}
+                            />
+                            <Input
+                              placeholder="Value"
+                              value={option.value}
+                              onChange={(e) => {
+                                const newOptions = [...field.value];
+                                newOptions[index] = {
+                                  ...newOptions[index],
+                                  value: e.target.value,
+                                };
+                                field.onChange(newOptions);
+                              }}
+                            />
+                          </div>
+                        ))}
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => {
+                            field.onChange([...(field.value || []), { label: '', value: '' }]);
+                          }}
+                        >
+                          <Plus />
+                          Add Option
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={formMap.control}
                 name="image"
@@ -170,24 +274,6 @@ export default function DialogUpdateFieldMaps({
                     <FormLabel>Map Image</FormLabel>
                     <FormControl>
                       <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={formMap.control}
-                name="options"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Map Options</FormLabel>
-                    <FormControl>
-                      <InputWithTags
-                        value={field.value || []}
-                        onValueChange={field.onChange}
-                        placeholder="Adicionar nova opção ( max: 5 )"
-                        limit={5}
-                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -227,10 +313,16 @@ export default function DialogUpdateFieldMaps({
                               ))}
                           </DamageMap>
                           <div className="flex flex-col gap-2 h-fit">
-                            <Button size="icon" variant="outline" onClick={() => null}>
+                            <Button
+                              type="button"
+                              size="icon"
+                              variant="outline"
+                              onClick={() => null}
+                            >
                               <LucideUndo />
                             </Button>
                             <Button
+                              type="button"
                               size="icon"
                               variant={eraser ? 'destructive' : 'outline'}
                               onClick={() => setEraser(!eraser)}

@@ -62,7 +62,7 @@ export default function RowField({
         <GripVertical />
       </Button>
       <div
-        className="grid gap-4 w-full"
+        className="flex flex-col sm:grid gap-2 w-full"
         style={{
           gridTemplateColumns: `repeat(${rowFields.length}, minmax(0, 1fr))`,
         }}

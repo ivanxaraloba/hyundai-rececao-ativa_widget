@@ -7,11 +7,14 @@ import Loading from './components/shared/loading.jsx';
 import PageFormBuilder from './pages/form-builder/page.jsx';
 import PageForm from './pages/form/page.jsx';
 import { useGlobalStore } from './stores/global.js';
+import { useRouterStore } from './stores/router.js';
 import { CREATOR_FORM_CONFIG } from './utils/constants';
+import routes from './utils/routes';
 import { zohocrm } from './utils/zoho-crm.js';
 
 export default function App() {
   const { getConfig, zohoInitialized } = useGlobalStore();
+  const router = useRouterStore();
 
   const queryConfig = useQuery({
     queryKey: ['config'],
@@ -22,6 +25,15 @@ export default function App() {
     enabled: !!zohoInitialized,
   });
 
+  const CurrentPage =
+    routes[router.current] ??
+    (() => (
+      <EmptyCard
+        title="Página não encontrada"
+        description={`A rota "${router.current}" não existe.`}
+        icon={AlertTriangleIcon}
+      />
+    ));
   return (
     <Layout>
       {queryConfig.isPending ? (
@@ -33,10 +45,7 @@ export default function App() {
           icon={AlertTriangleIcon}
         />
       ) : (
-        <>
-          <PageFormBuilder />
-          {/* <PageForm /> */}
-        </>
+        <CurrentPage />
       )}
     </Layout>
   );

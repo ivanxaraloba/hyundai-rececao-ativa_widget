@@ -1,13 +1,5 @@
 import { VariantsProps } from '@/types/types.config';
-import {
-  Calendar,
-  List,
-  ListChecks,
-  LucideProps,
-  Radio,
-  Sparkles,
-  Text,
-} from 'lucide-react';
+import { Calendar, Hash, List, ListChecks, LucideProps, Radio, Sparkles, Text } from 'lucide-react';
 
 export const CREATOR_FORM_CONFIG = {
   appName: 'rececao-ativa',
@@ -20,6 +12,7 @@ export const FORMBUILDER_STORAGE = {
 };
 
 export const FORMBUILDER_FIELDS_VARIANTS = [
+  'number',
   'input',
   'date',
   'textarea',
@@ -39,6 +32,7 @@ export const VARIANT: Record<
     >;
   }
 > = {
+  number: { label: 'Number', type: 'default', icon: Hash },
   input: { label: 'Input', type: 'default', icon: Text },
   date: { label: 'Date', type: 'default', icon: Calendar },
   textarea: {

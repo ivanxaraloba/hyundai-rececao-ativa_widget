@@ -23,7 +23,7 @@ export default function SectionCustomization({
           return (
             <RenderField
               key={configField.id}
-              configField={configField}
+              field={configField}
               form={form}
             />
           );

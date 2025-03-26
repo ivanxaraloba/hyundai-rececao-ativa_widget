@@ -2,7 +2,7 @@ import { LoaderCircle } from 'lucide-react';
 
 const Loading = ({ msg = '' }: { msg: string }) => {
   return (
-    <div className="fixed w-full h-full flex items-center justify-center">
+    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center">
       <div className="animate-pulse flex flex-col justify-center items-center gap-2">
         <LoaderCircle className="animate-spin size-8" strokeWidth={1} />
         {msg && <h1 className="font-bold text-lg">{msg}</h1>}
