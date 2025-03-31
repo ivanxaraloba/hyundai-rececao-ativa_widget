@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import DotCreate from '@/pages/form-builder/_components/dot-create';
 import { FieldRowProps, MapProps, mapSchema } from '@/types/types.config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DialogProps } from '@radix-ui/react-dialog';
@@ -8,7 +9,6 @@ import { Ban, LucideEraser, LucideUndo, Plus, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 import DamageMap from '@/components/shared/damage-map';
-import DotCreate from '@/components/shared/dot-create';
 import { EmptyCard } from '@/components/shared/empty-card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -77,7 +77,7 @@ export default function DialogUpdateFieldMaps({
           ...(formMap.getValues('dots') || []),
           {
             id: Date.now().toString(),
-            name: `Dot ${Date.now()}`,
+            label: `Dot ${Date.now()}`,
             x,
             y,
             active: false,

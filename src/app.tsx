@@ -10,7 +10,6 @@ import { useGlobalStore } from './stores/global.js';
 import { useRouterStore } from './stores/router.js';
 import { CREATOR_FORM_CONFIG } from './utils/constants';
 import routes from './utils/routes';
-import { zohocrm } from './utils/zoho-crm.js';
 
 export default function App() {
   const { getConfig, zohoInitialized } = useGlobalStore();

@@ -1,8 +1,5 @@
-import { DotProps } from '@/types/types.config';
-import type { ConfigProps, MapProps } from '@/types/types.config.js';
+import type { ConfigProps } from '@/types/types.config.js';
 import { create } from 'zustand';
-
-import { splitOptions } from '@/utils/generic';
 
 interface GlobalStore {
   zohoInitialized: boolean;

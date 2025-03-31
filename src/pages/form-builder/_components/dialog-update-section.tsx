@@ -10,8 +10,22 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
 interface UpdateSectionProps {
@@ -19,7 +33,11 @@ interface UpdateSectionProps {
   onSuccess: (updatedSection: SectionProps) => void;
 }
 
-export function DialogUpdateSection({ section, onSuccess, ...props }: UpdateSectionProps & DialogProps) {
+export function DialogUpdateSection({
+  section,
+  onSuccess,
+  ...props
+}: UpdateSectionProps & DialogProps) {
   const form = useForm<SectionProps>({
     resolver: zodResolver(sectionSchema),
     defaultValues: {

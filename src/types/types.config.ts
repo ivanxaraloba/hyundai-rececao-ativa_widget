@@ -9,10 +9,10 @@ export const optionSchema = z.object({
 });
 
 export const dotSchema = z.object({
-  id: z.string(),
-  x: z.number(),
-  y: z.number(),
-  name: z.string(),
+  id: z.string().or(z.number()),
+  label: z.string(),
+  x: z.coerce.number(),
+  y: z.coerce.number(),
 });
 
 export const mapSchema = z.object({

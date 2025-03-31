@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import BrandLogo from '@/components/shared/brand-logo';
-import FormSection from '@/components/shared/form-section';
+import FormSection from '@/pages/form/_components/form-section';
 import { Button } from '@/components/ui/button';
 import ButtonLoading from '@/components/ui/button-loading';
 import { Form } from '@/components/ui/form';

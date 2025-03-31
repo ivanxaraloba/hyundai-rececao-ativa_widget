@@ -34,7 +34,7 @@ export default function DotCreate({ dot, onSelect, disabled }: DotCreateProps) {
         >
           <Popover>
             <PopoverTrigger>
-              <Dot className={cn((!dot.id || !dot.name) && 'bg-red-400')} />
+              <Dot className={cn((!dot.id || !dot.label) && 'bg-red-400')} />
             </PopoverTrigger>
 
             <PopoverContent side="right" className="flex flex-col gap-2">
@@ -55,17 +55,17 @@ export default function DotCreate({ dot, onSelect, disabled }: DotCreateProps) {
                 <div className="grid grid-cols-3 items-center gap-4">
                   <Label htmlFor="name">Name</Label>
                   <Input
-                    value={dot.name}
+                    value={dot.label}
                     className="col-span-2 h-8"
                     placeholder="Nome da area"
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    onChange={(e) => handleInputChange('label', e.target.value)}
                   />
                 </div>
               </div>
             </PopoverContent>
           </Popover>
         </TooltipTrigger>
-        <TooltipContent>{dot.name}</TooltipContent>
+        <TooltipContent>{dot.label}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

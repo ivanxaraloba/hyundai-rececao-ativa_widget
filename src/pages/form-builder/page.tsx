@@ -41,7 +41,7 @@ import DialogUpdateFieldMaps from './_components/dialog-update-field-maps';
 import { DialogUpdateSection } from './_components/dialog-update-section';
 import DropdownFields from './_components/dropdown-fields';
 import RowField from './_components/row-fields';
-import Section from './_components/section';
+import FormBuilderSection from './_components/section';
 
 export type RowActionProps =
   | {
@@ -151,7 +151,7 @@ export default function PageFormBuilder() {
           </div>
 
           {config?.sections.map((section) => (
-            <Section
+            <FormBuilderSection
               key={section.id}
               section={section}
               removeSection={sections.remove}
@@ -204,7 +204,7 @@ export default function PageFormBuilder() {
                   </Button>
                 </DropdownFields>
               </div>
-            </Section>
+            </FormBuilderSection>
           ))}
           <div className="w-full flex justify-center">
             <Button

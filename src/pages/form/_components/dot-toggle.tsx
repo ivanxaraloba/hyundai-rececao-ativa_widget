@@ -62,8 +62,6 @@ export default function DotToggle({ dot, map, field }: DotToggleProps) {
     });
   };
 
-  console.log(field.value);
-
   return (
     <TooltipProvider>
       <Tooltip>
@@ -110,7 +108,7 @@ export default function DotToggle({ dot, map, field }: DotToggleProps) {
             )}
           </Popover>
         </TooltipTrigger>
-        <TooltipContent>{dot.name}</TooltipContent>
+        <TooltipContent>{dot.label}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
