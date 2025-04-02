@@ -6,6 +6,7 @@ import '@/assets/styles/index.css';
 import { Toaster } from 'sonner';
 
 import App from './app.jsx';
+import Gantt from './components/gantt/gantt.jsx';
 import ReactQueryProvider from './providers/react-query.jsx';
 import { useGlobalStore } from './stores/global.js';
 
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ReactQueryProvider>
       <Toaster richColors />
-      <App />
+      <Gantt />
     </ReactQueryProvider>
   </React.StrictMode>,
 );
