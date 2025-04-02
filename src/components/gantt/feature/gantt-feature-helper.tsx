@@ -2,9 +2,9 @@ import { FC, useContext } from 'react';
 import { cn } from '@/lib/utils';
 import { useMouse } from '@uidotdev/usehooks';
 import { PlusIcon } from 'lucide-react';
-import { useGanttScrollX } from '@/components/gantt/hooks/use-gantt-scroll';
-import { GanttContext } from '@/components/gantt/context/gantt-context';
-import { getDateByMousePosition } from '@/components/gantt/utils/gantt-calculation';
+import { GanttContext } from '@/components/gantt/context';
+import { getDateByMousePosition } from '@/components/gantt/utils-positioning';
+import { useGanttScrollX } from '../hooks';
 
 export type GanttFeatureHelperProps = {
   top: number;

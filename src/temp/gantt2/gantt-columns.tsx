@@ -5,7 +5,7 @@ import { FC, useContext, useId, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useMouse, useThrottle, useWindowScroll } from '@uidotdev/usehooks';
 
-import { useGanttDragging } from '../../components/gantt/gantt';
+import { useGanttDragging } from '../../components/gantt/_index';
 import { GanttAddFeatureHelper } from './gantt-feature-helper';
 import { GanttContext } from './gantt-provider';
 

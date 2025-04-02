@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { useMouse } from '@uidotdev/usehooks';
 import { PlusIcon } from 'lucide-react';
 
-import { useGanttScrollX } from '../../components/gantt/gantt';
+import { useGanttScrollX } from '../../components/gantt/_index';
 import { GanttContext } from './gantt-provider';
 import { getDateByMousePosition } from './gantt-utils';
 

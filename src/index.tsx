@@ -6,7 +6,7 @@ import '@/assets/styles/index.css';
 import { Toaster } from 'sonner';
 
 import App from './app.jsx';
-import Gantt from './components/gantt/gantt.jsx';
+import Gantt from './components/gantt/_index.jsx';
 import ReactQueryProvider from './providers/react-query.jsx';
 import { useGlobalStore } from './stores/global.js';
 

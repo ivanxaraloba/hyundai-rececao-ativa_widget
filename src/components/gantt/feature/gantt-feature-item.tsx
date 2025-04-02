@@ -3,8 +3,8 @@ import { FC, ReactNode, useContext } from 'react';
 import { cn } from '@/lib/utils';
 import { differenceInDays } from 'date-fns';
 
-import type { GanttFeature } from '@/components/gantt/components/feature/gantt-feature';
-import { GanttContext } from '@/components/gantt/context/gantt-context';
+import type { GanttFeature } from '@/components/gantt/feature/gantt-feature';
+import { GanttContext } from '@/components/gantt/context';
 import { OccupancyBar } from './occupancy-bar';
 
 export type GanttFeatureItemProps = {

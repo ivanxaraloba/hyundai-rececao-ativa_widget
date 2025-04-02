@@ -6,10 +6,10 @@ import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 import { useMouse } from '@uidotdev/usehooks';
 import { addDays, differenceInDays } from 'date-fns';
 
-import { GanttContext } from '../../context/gantt-context';
-import { useGanttScrollX } from '../../hooks/use-gantt-scroll';
-import { getDateByMousePosition, getOffset, getWidth } from '../../utils/gantt-calculation';
-import { getAddRange, getDifferenceIn, getInnerDifferenceIn } from '../../utils/gantt-date';
+import { GanttContext } from '../context';
+import { useGanttScrollX } from '../hooks';
+import { getAddRange, getDifferenceIn, getInnerDifferenceIn } from '../utils-dates';
+import { getDateByMousePosition, getOffset, getWidth } from '../utils-positioning';
 import { GanttFeature } from './gantt-feature';
 import { GanttFeatureDragHelper } from './gantt-feature-drag-helper';
 import { GanttFeatureItemCard } from './gantt-feature-item-card';

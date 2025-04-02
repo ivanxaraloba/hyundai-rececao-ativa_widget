@@ -13,7 +13,7 @@ import {
   startOfMonth,
 } from 'date-fns';
 
-import { Range, TimelineData } from '../../components/gantt/gantt';
+import { Range, TimelineData } from '../../components/gantt/_index';
 import { GanttContextProps } from './gantt-provider';
 
 export const MODERN_COLORS = [

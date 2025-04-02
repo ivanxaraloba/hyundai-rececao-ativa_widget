@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import { getDaysInMonth } from 'date-fns';
 import throttle from 'lodash.throttle';
 
-import { Range, useGanttScrollX } from '../../components/gantt/gantt';
+import { Range, useGanttScrollX } from '../../components/gantt/_index';
 import { TimelineData } from './gantt-timeline';
 import { calculateInnerOffset, createInitialTimelineData, getDifferenceIn } from './gantt-utils';
 

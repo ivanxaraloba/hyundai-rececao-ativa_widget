@@ -4,15 +4,15 @@ import { cn } from '@/lib/utils';
 import { formatDate } from 'date-fns';
 import { TrashIcon } from 'lucide-react';
 
-import { GanttContext } from '@/components/gantt/context/gantt-context';
-import { calculateInnerOffset } from '@/components/gantt/utils/gantt-calculation';
+import { GanttContext } from '@/components/gantt/context';
+import { calculateInnerOffset } from '@/components/gantt/utils-positioning';
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
-import { getDifferenceIn } from '../../utils/gantt-date';
+import { getDifferenceIn } from '../utils-dates';
 
 export type GanttMarkerProps = {
   id: string;

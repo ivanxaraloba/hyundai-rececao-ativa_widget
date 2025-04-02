@@ -3,9 +3,9 @@ import { FC, useContext, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useMouse, useThrottle, useWindowScroll } from '@uidotdev/usehooks';
 
-import { GanttContext } from '@/components/gantt/context/gantt-context';
-import { useGanttDragging } from '@/components/gantt/hooks/use-gantt-dragging';
+import { GanttContext } from '@/components/gantt/context';
 import { GanttAddFeatureHelper } from '../feature/gantt-feature-add';
+import { useGanttDragging } from '../hooks';
 
 export type GanttColumnProps = {
   index: number;

@@ -11,14 +11,14 @@ import { cn } from '@/lib/utils';
 import { getDaysInMonth } from 'date-fns';
 import throttle from 'lodash.throttle';
 
-import { useGanttScrollX } from '@/components/gantt/hooks/use-gantt-scroll';
 import {
   calculateInnerOffset,
   createInitialTimelineData,
-} from '@/components/gantt/utils/gantt-calculation';
-import { TimelineData } from '../components/content/gantt-timeline';
-import { getDifferenceIn, Range } from '../utils/gantt-date';
-import { DEFAULT_SIZES, GanttContext, type GanttContextProps } from './gantt-context';
+} from '@/components/gantt/utils-positioning';
+import { TimelineData } from './content/gantt-timeline';
+import { GANTT_SIZES, GanttContext, type GanttContextProps } from './context';
+import { useGanttScrollX } from './hooks';
+import { getDifferenceIn, Range } from './utils-dates';
 
 export type GanttProviderProps = {
   zoom?: number;
@@ -40,20 +40,20 @@ export default function GanttProvider({
   const [, setScrollX] = useGanttScrollX();
   const sidebarElement = scrollRef.current?.querySelector('[data-roadmap-ui="gantt-sidebar"]');
 
-  const sidebarWidth = sidebarElement ? DEFAULT_SIZES.sidebarWidth : 0;
-  let columnWidth = DEFAULT_SIZES.baseColumnWidth;
+  const sidebarWidth = sidebarElement ? GANTT_SIZES.sidebarWidth : 0;
+  let columnWidth = GANTT_SIZES.baseColumnWidth;
 
   if (range === 'monthly') {
-    columnWidth = DEFAULT_SIZES.monthlyColumnWidth;
+    columnWidth = GANTT_SIZES.monthlyColumnWidth;
   } else if (range === 'quarterly') {
-    columnWidth = DEFAULT_SIZES.quarterlyColumnWidth;
+    columnWidth = GANTT_SIZES.quarterlyColumnWidth;
   }
 
   const cssVariables = {
     '--gantt-zoom': `${zoom}`,
     '--gantt-column-width': `${(zoom / 100) * columnWidth}px`,
-    '--gantt-header-height': `${DEFAULT_SIZES.headerHeight}px`,
-    '--gantt-row-height': `${DEFAULT_SIZES.rowHeight}px`,
+    '--gantt-header-height': `${GANTT_SIZES.headerHeight}px`,
+    '--gantt-row-height': `${GANTT_SIZES.rowHeight}px`,
     '--gantt-sidebar-width': `${sidebarWidth}px`,
   } as CSSProperties;
 
@@ -159,10 +159,10 @@ export default function GanttProvider({
       value={{
         zoom,
         range,
-        headerHeight: DEFAULT_SIZES.headerHeight,
+        headerHeight: GANTT_SIZES.headerHeight,
         columnWidth,
         sidebarWidth,
-        rowHeight: DEFAULT_SIZES.rowHeight,
+        rowHeight: GANTT_SIZES.rowHeight,
         onAddItem,
         timelineData,
         placeholderLength: 2,

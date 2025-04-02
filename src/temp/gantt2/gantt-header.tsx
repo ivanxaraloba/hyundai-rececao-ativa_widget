@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { addDays, format } from 'date-fns';
 import { pt } from 'date-fns/locale';
 
-import { Range } from '../../components/gantt/gantt';
+import { Range } from '../../components/gantt/_index';
 import { GanttColumns } from './gantt-columns';
 import GanttContentHeader from './gantt-content-header';
 import { GanttContext } from './gantt-provider';

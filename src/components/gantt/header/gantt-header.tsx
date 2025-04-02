@@ -2,11 +2,11 @@ import { FC, useContext } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { GanttHeaderDaily } from '@/components/gantt/components/header/gantt-header-daily';
-import { GanttHeaderMonthly } from '@/components/gantt/components/header/gantt-header-monthly';
-import { GanttHeaderQuarterly } from '@/components/gantt/components/header/gantt-header-quarterly';
-import { GanttContext } from '@/components/gantt/context/gantt-context';
-import { Range } from '../../utils/gantt-date';
+import { GanttHeaderDaily } from '@/components/gantt/header/gantt-header-daily';
+import { GanttHeaderMonthly } from '@/components/gantt/header/gantt-header-monthly';
+import { GanttHeaderQuarterly } from '@/components/gantt/header/gantt-header-quarterly';
+import { GanttContext } from '@/components/gantt/context';
+import { Range } from '../utils-dates';
 
 const headers: Record<Range, FC> = {
   daily: GanttHeaderDaily,

@@ -1,6 +1,6 @@
 import { addDays, getDate, getDaysInMonth, isSameDay } from 'date-fns';
 
-import { GanttContextProps } from '@/components/gantt/context/gantt-context';
+import { GanttContextProps } from '@/components/gantt/context';
 import {
   getAddRange,
   getDifferenceIn,
@@ -9,8 +9,8 @@ import {
   getsDaysIn,
   getStartOf,
   Range,
-} from '@/components/gantt/utils/gantt-date';
-import { TimelineData } from '../components/content/gantt-timeline';
+} from '@/components/gantt/utils-dates';
+import { TimelineData } from './content/gantt-timeline';
 
 export const calculateInnerOffset = (date: Date, range: Range, columnWidth: number) => {
   const startOf = getStartOf(range);

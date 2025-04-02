@@ -1,22 +1,9 @@
-export const MODERN_COLORS = [
-  '#FF9F0A', // orange (warmer)
-  '#FF375F', // pink (vibrant)
-  '#BF5AF2', // purple (softer)
-  '#0A84FF', // blue (bright)
-  '#32D74B', // green (fresh)
-  '#64D2FF', // cyan (light)
-  '#5E5CE6', // indigo (muted)
-  '#FF6B6B', // coral (warm)
-  '#FFD60A', // yellow (bright)
-  '#66D4CF', // mint (cool)
-  '#FF8CC3', // rose (soft)
-  '#40C8E0', // sky (bright)
-];
+import { GANTT_FEATURES_COLORS } from './utils-constants';
 
 export const getColorFromId = (id: string): string => {
   const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const index = hash % MODERN_COLORS.length;
-  return MODERN_COLORS[index];
+  const index = hash % GANTT_FEATURES_COLORS.length;
+  return GANTT_FEATURES_COLORS[index];
 };
 
 export const getLightColor = (color: string): string => {

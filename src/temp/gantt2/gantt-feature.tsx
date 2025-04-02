@@ -9,7 +9,7 @@ import { useMouse } from '@uidotdev/usehooks';
 import { addDays, differenceInDays, formatDate } from 'date-fns';
 
 import { Card } from '../../components/ui/card';
-import { useGanttDragging, useGanttScrollX } from '../../components/gantt/gantt';
+import { useGanttDragging, useGanttScrollX } from '../../components/gantt/_index';
 import { GanttContext } from './gantt-provider';
 import {
   getColorFromId,

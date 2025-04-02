@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { useDraggable } from '@dnd-kit/core';
 
 import { Card } from '@/components/ui/card';
-import { useGanttDragging } from '../../hooks/use-gantt-dragging';
-import { getColorFromId, getLightColor } from '../../utils/gantt-color';
+import { useGanttDragging } from '../hooks';
+import { getColorFromId, getLightColor } from '../utils-colors';
 import { GanttFeature } from './gantt-feature';
 
 export type GanttFeatureItemCardProps = Pick<GanttFeature, 'id'> & {

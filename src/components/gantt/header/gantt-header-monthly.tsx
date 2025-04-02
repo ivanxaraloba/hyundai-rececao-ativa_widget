@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { format } from 'date-fns';
 import { pt } from 'date-fns/locale';
-import { GanttContext } from '../../context/gantt-context';
+import { GanttContext } from '../context';
 import { GanttColumns } from '../content/gantt-columns';
 import { GanttContentHeader } from '../content/gantt-content-header';
 

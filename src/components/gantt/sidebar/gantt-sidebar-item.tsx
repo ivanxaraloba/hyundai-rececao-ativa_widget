@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { cn } from '@/lib/utils';
-import { GanttFeature } from '@/components/gantt/components/feature/gantt-feature';
-import { getColorFromId } from '@/components/gantt/utils/gantt-color';
+import { GanttFeature } from '@/components/gantt/feature/gantt-feature';
+import { getColorFromId } from '@/components/gantt/utils-colors';
 
 export type GanttSidebarItemProps = {
   feature: GanttFeature;

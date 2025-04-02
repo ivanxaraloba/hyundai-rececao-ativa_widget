@@ -3,9 +3,9 @@ import { FC, useContext } from 'react';
 import { cn } from '@/lib/utils';
 import { formatDate } from 'date-fns';
 
-import { GanttContext } from '@/components/gantt/context/gantt-context';
-import { calculateInnerOffset } from '@/components/gantt/utils/gantt-calculation';
-import { getDifferenceIn } from '../../utils/gantt-date';
+import { GanttContext } from '@/components/gantt/context';
+import { calculateInnerOffset } from '@/components/gantt/utils-positioning';
+import { getDifferenceIn } from '../utils-dates';
 
 export const GanttToday: FC<{ className?: string }> = ({ className }) => {
   const label = 'Today';

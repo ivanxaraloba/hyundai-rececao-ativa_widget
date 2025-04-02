@@ -1,22 +1,17 @@
 import { FC, useContext } from 'react';
-
 import { cn } from '@/lib/utils';
 import { useMouse, useThrottle, useWindowScroll } from '@uidotdev/usehooks';
 import { formatDate } from 'date-fns';
 import { PlusIcon } from 'lucide-react';
+import { GanttContext } from '@/components/gantt/context';
+import { getDateByMousePosition } from '@/components/gantt/utils-positioning';
 
-import { GanttContext } from '../../context/gantt-context';
-import { getDateByMousePosition } from '../../utils/gantt-calculation';
-
-export type GanttCreateMarkerTriggerProps = {
+export type GanttCreateMarkerProps = {
   onCreateMarker: (date: Date) => void;
   className?: string;
 };
 
-export const GanttCreateMarkerTrigger: FC<GanttCreateMarkerTriggerProps> = ({
-  onCreateMarker,
-  className,
-}) => {
+export const GanttCreateMarker: FC<GanttCreateMarkerProps> = ({ onCreateMarker, className }) => {
   const gantt = useContext(GanttContext);
   const [mousePosition, mouseRef] = useMouse<HTMLDivElement>();
   const [windowScroll] = useWindowScroll();

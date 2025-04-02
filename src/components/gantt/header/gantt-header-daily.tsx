@@ -1,9 +1,9 @@
 import { FC, useContext } from 'react';
 import { format, addDays } from 'date-fns';
 import { pt } from 'date-fns/locale';
-import { GanttContext } from '@/components/gantt/context/gantt-context';
-import { GanttColumns } from '@/components/gantt/components/content/gantt-columns';
-import { GanttContentHeader } from '@/components/gantt/components/content/gantt-content-header';
+import { GanttContext } from '@/components/gantt/context';
+import { GanttColumns } from '@/components/gantt/content/gantt-columns';
+import { GanttContentHeader } from '@/components/gantt/content/gantt-content-header';
 
 export const GanttHeaderDaily: FC = () => {
   const gantt = useContext(GanttContext);

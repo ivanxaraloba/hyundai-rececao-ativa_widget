@@ -1,7 +1,8 @@
 import { createContext, RefObject } from 'react';
 
-import { TimelineData } from '../components/content/gantt-timeline';
-import { Range } from '../utils/gantt-date';
+import { TimelineData } from './content/gantt-timeline';
+import { GANTT_SIZES } from './utils-constants';
+import { Range } from './utils-dates';
 
 export type GanttContextProps = {
   zoom: number;
@@ -16,26 +17,17 @@ export type GanttContextProps = {
   ref: RefObject<HTMLDivElement | null> | null;
 };
 
-const DEFAULT_SIZES = {
-  headerHeight: 60,
-  sidebarWidth: 300,
-  rowHeight: 38,
-  baseColumnWidth: 50,
-  monthlyColumnWidth: 150,
-  quarterlyColumnWidth: 100,
-};
-
 export const GanttContext = createContext<GanttContextProps>({
   zoom: 100,
   range: 'monthly',
-  columnWidth: DEFAULT_SIZES.baseColumnWidth,
-  headerHeight: DEFAULT_SIZES.headerHeight,
-  sidebarWidth: DEFAULT_SIZES.sidebarWidth,
-  rowHeight: DEFAULT_SIZES.rowHeight,
+  columnWidth: GANTT_SIZES.baseColumnWidth,
+  headerHeight: GANTT_SIZES.headerHeight,
+  sidebarWidth: GANTT_SIZES.sidebarWidth,
+  rowHeight: GANTT_SIZES.rowHeight,
   onAddItem: undefined,
   placeholderLength: 2,
   timelineData: [],
   ref: null,
 });
 
-export { DEFAULT_SIZES };
+export { GANTT_SIZES };

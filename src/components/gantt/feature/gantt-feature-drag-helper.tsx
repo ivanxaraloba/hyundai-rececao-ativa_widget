@@ -1,8 +1,10 @@
 import { FC, useEffect } from 'react';
+
 import { cn } from '@/lib/utils';
-import { formatDate } from 'date-fns';
 import { useDraggable } from '@dnd-kit/core';
-import { useGanttDragging } from '../../hooks/use-gantt-dragging';
+import { formatDate } from 'date-fns';
+
+import { useGanttDragging } from '../hooks';
 import type { GanttFeature } from './gantt-feature';
 
 export type GanttFeatureDragHelperProps = {

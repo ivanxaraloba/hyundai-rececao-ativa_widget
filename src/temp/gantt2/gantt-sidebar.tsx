@@ -2,7 +2,7 @@
 
 import { FC, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { GanttFeature } from '../../components/gantt/gantt';
+import { GanttFeature } from '../../components/gantt/_index';
 import { getColorFromId } from './gantt-utils';
 
 export type GanttSidebarItemProps = {

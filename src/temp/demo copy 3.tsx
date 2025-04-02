@@ -15,7 +15,7 @@ import {
   GanttTimeline,
   GanttToday,
   Range,
-} from '@/components/gantt/gantt';
+} from '@/components/gantt/_index';
 import {
   ContextMenu,
   ContextMenuContent,
